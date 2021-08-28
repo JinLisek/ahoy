@@ -6,8 +6,6 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.roomName = this.props.match.params.roomName;
-    const webSocketAddr = "ws://192.168.1.165:8000/ws/chat/" + this.roomName + "/";
-    this.webSocketClient = new WebSocket(webSocketAddr);
   }
 
   render = () => {
@@ -34,6 +32,8 @@ class Chat extends React.Component {
   };
 
   componentDidMount = () => {
+    const webSocketAddr = "ws://192.168.1.165:8000/ws/chat/" + this.roomName + "/";
+    this.webSocketClient = new WebSocket(webSocketAddr);
     this.webSocketClient.addEventListener("open", this.openEventListener);
   };
 }
