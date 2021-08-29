@@ -1,14 +1,11 @@
 import React from "react";
 
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-
 import CreateRoom from "./CreateRoom";
 
-const Home = () => {
+const Home = (props) => {
   return (
     <div>
-      <CreateRoom />
+      <CreateRoom history={props.history} />
     </div>
   );
 };
