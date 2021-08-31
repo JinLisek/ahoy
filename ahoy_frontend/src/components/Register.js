@@ -64,11 +64,11 @@ class Register extends React.Component {
             <Form.Label>Username</Form.Label>
             <Form.Control type="text" onChange={this.handleChangeUserName} />
           </Form.Group>
-          <Form.Group controlId={"formRegisterUserName"}>
+          <Form.Group controlId={"formRegisterEmail"}>
             <Form.Label>E-mail</Form.Label>
             <Form.Control type="text" onChange={this.handleChangeEmail} />
           </Form.Group>
-          <Form.Group controlId={"formRegisterUserName"}>
+          <Form.Group controlId={"formRegisterPassword"}>
             <Form.Label>Password</Form.Label>
             <Form.Control type="text" onChange={this.handleChangePassword} />
           </Form.Group>
