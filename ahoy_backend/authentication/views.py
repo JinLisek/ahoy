@@ -7,6 +7,9 @@ from django.http import HttpResponse, HttpResponseBadRequest
 
 
 def register_view(request):
+    if request.user.is_authenticated:
+        return HttpResponseBadRequest("Cannot register, currently logged in")
+
     user_to_register = loads(request.body)
     users_with_requested_name_or_email = User.objects.filter(
         Q(username=user_to_register["user_name"]) | Q(email=user_to_register["email"])
