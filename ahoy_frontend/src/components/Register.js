@@ -25,35 +25,34 @@ class Register extends React.Component {
 
   onSubmit = async (event) => {
     event.preventDefault();
-    const nowDate = new Date();
-    const currentTime = `${nowDate.getHours()}:${nowDate.getMinutes()}:${nowDate.getSeconds()}`;
-
     const cookies = new Cookies();
     const csrfCookie = cookies.get("csrftoken");
 
-    console.log(
-      `${currentTime} Registering user: ${this.state.userName} with email: ${this.state.email} and password: ${this.state.password}`
-    );
-    console.log("Using csrfCookie: " + csrfCookie);
-
     if (this.state.userName === "" || this.state.email === "" || this.state.password === "") {
-      console.log("TRIED TO REGISTER WITH SOMETHING EMPTY!!!!!!!!!!!!!!!");
+      console.warn("TRIED TO REGISTER WITH SOMETHING EMPTY!!!!!!!!!!!!!!!");
       return;
     }
 
     const requestData = { user_name: this.state.userName, email: this.state.email, password: this.state.password };
 
-    const registerResp = await axios({
-      method: "post",
-      url: "http://192.168.1.165:8000/authentication/register",
-      data: requestData,
-      withCredentials: true,
-      xsrfHeaderName: "X-CSRFToken",
-      xsrfCookieName: "csrftoken",
-      headers: { "X-CSRFToken": csrfCookie },
-    });
-    const { data } = await registerResp;
-    console.log("REGISTER RESP RECEIVED: " + data);
+    try {
+      const registerResp = await axios({
+        method: "post",
+        url: "http://192.168.1.165:8000/authentication/register",
+        data: requestData,
+        withCredentials: true,
+        xsrfHeaderName: "X-CSRFToken",
+        xsrfCookieName: "csrftoken",
+        headers: { "X-CSRFToken": csrfCookie },
+      });
+      const { data } = await registerResp;
+      console.log("Register response: " + data);
+    } catch (err) {
+      if (err.response) {
+        const errResp = err.response;
+        console.error(`${errResp.statusText}: ${errResp.data}`);
+      } else console.error(err);
+    }
   };
 
   render = () => {
