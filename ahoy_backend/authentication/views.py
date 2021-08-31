@@ -1,6 +1,6 @@
 from json import loads
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -28,7 +28,7 @@ def register_view(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return HttpResponse("Already logged in", status=200)
+        return HttpResponse("Already logged in")
 
     user_to_login = loads(request.body)
     user = authenticate(
@@ -37,6 +37,14 @@ def login_view(request):
 
     if user is not None:
         login(request, user)
-        return HttpResponse("Successfully logged in", status=200)
+        return HttpResponse("Successfully logged in")
 
     return HttpResponseBadRequest("Incorrect credentials")
+
+
+def logout_view(request):
+    if not request.user.is_authenticated:
+        return HttpResponseBadRequest("Not logged in, cannot logout")
+
+    logout(request)
+    return HttpResponse("Successfully logged out")
