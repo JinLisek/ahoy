@@ -1,4 +1,4 @@
-from json import loads
+import json
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -10,7 +10,7 @@ def register_view(request):
     if request.user.is_authenticated:
         return HttpResponseBadRequest("Cannot register, currently logged in")
 
-    user_to_register = loads(request.body)
+    user_to_register = json.loads(request.body)
     users_with_requested_name_or_email = User.objects.filter(
         Q(username=user_to_register["username"]) | Q(email=user_to_register["email"])
     )
@@ -30,14 +30,15 @@ def login_view(request):
     if request.user.is_authenticated:
         return HttpResponse("Already logged in")
 
-    user_to_login = loads(request.body)
+    user_to_login = json.loads(request.body)
     user = authenticate(
         username=user_to_login["username"], password=user_to_login["password"]
     )
 
     if user is not None:
         login(request, user)
-        return HttpResponse("Successfully logged in")
+        resp_body = {"username": user.username, "email": user.email}
+        return HttpResponse(json.dumps(resp_body))
 
     return HttpResponseBadRequest("Incorrect credentials")
 
