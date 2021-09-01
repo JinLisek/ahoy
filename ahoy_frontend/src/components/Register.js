@@ -33,7 +33,7 @@ class Register extends React.Component {
       return;
     }
 
-    const requestData = { user_name: this.state.userName, email: this.state.email, password: this.state.password };
+    const requestData = { username: this.state.userName, email: this.state.email, password: this.state.password };
 
     try {
       const registerResp = await axios({

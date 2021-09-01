@@ -12,12 +12,12 @@ def register_view(request):
 
     user_to_register = loads(request.body)
     users_with_requested_name_or_email = User.objects.filter(
-        Q(username=user_to_register["user_name"]) | Q(email=user_to_register["email"])
+        Q(username=user_to_register["username"]) | Q(email=user_to_register["email"])
     )
 
     if len(users_with_requested_name_or_email) == 0:
         User.objects.create_user(
-            username=user_to_register["user_name"],
+            username=user_to_register["username"],
             email=user_to_register["email"],
             password=user_to_register["password"],
         )
@@ -32,7 +32,7 @@ def login_view(request):
 
     user_to_login = loads(request.body)
     user = authenticate(
-        username=user_to_login["user_name"], password=user_to_login["password"]
+        username=user_to_login["username"], password=user_to_login["password"]
     )
 
     if user is not None:

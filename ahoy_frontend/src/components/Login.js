@@ -29,7 +29,7 @@ class Login extends React.Component {
       return;
     }
 
-    const requestData = { user_name: this.state.userName, password: this.state.password };
+    const requestData = { username: this.state.userName, password: this.state.password };
 
     try {
       const loginResp = await axios({
