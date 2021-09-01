@@ -42,7 +42,7 @@ class Login extends React.Component {
         headers: { "X-CSRFToken": csrfCookie },
       });
       const { data } = await loginResp;
-      console.log("Login response: " + data);
+      console.log("Logged in: ", data);
     } catch (err) {
       if (err.response) {
         const errResp = err.response;
