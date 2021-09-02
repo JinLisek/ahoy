@@ -12,8 +12,8 @@ const Home = (props) => {
     <div>
       {props.userInfo === null ? <Register /> : null}
       {props.userInfo === null ? <Login /> : null}
-      {props.userInfo !== null ? <CreateRoom history={props.history} /> : null}
       {props.userInfo !== null ? <Logout /> : null}
+      {props.userInfo !== null ? <CreateRoom history={props.history} /> : null}
     </div>
   );
 };
