@@ -1,5 +1,7 @@
 import React from "react";
 
+import { connect } from "react-redux";
+
 import CreateRoom from "./CreateRoom";
 import Register from "./Register";
 import Login from "./Login";
@@ -8,11 +10,16 @@ import Logout from "./Logout";
 const Home = (props) => {
   return (
     <div>
-      <CreateRoom history={props.history} />
-      <Register />
-      <Login />
-      <Logout />
+      {props.userInfo === null ? <Register /> : null}
+      {props.userInfo === null ? <Login /> : null}
+      {props.userInfo !== null ? <CreateRoom history={props.history} /> : null}
+      {props.userInfo !== null ? <Logout /> : null}
     </div>
   );
 };
-export default Home;
+
+const mapStateToProps = (state) => {
+  const { userInfo } = state;
+  return { userInfo };
+};
+export default connect(mapStateToProps)(Home);

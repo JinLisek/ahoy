@@ -2,8 +2,12 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import React from "react";
 
+import { connect } from "react-redux";
+
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+
+import { loginUser } from "../redux-stuff/actions";
 
 class Login extends React.Component {
   constructor(props) {
@@ -43,6 +47,7 @@ class Login extends React.Component {
       });
       const { data } = await loginResp;
       console.log("Logged in: ", data);
+      this.props.loginUser(data);
     } catch (err) {
       if (err.response) {
         const errResp = err.response;
@@ -72,4 +77,5 @@ class Login extends React.Component {
     );
   };
 }
-export default Login;
+
+export default connect(null, { loginUser })(Login);
