@@ -28,7 +28,7 @@ def register_view(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        return HttpResponse("Already logged in")
+        return HttpResponseBadRequest("Already logged in")
 
     user_to_login = json.loads(request.body)
     user = authenticate(
