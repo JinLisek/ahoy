@@ -7,7 +7,7 @@ import LoggedInView from "./LoggedInView";
 
 const Home = (props) => {
   if (props.userInfo === null) return <NotLoggedInView />;
-  return <LoggedInView />;
+  return <LoggedInView history={props.history} />;
 };
 
 const mapStateToProps = (state) => {
