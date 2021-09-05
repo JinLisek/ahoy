@@ -4,13 +4,12 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import { logoutUser } from "../redux-stuff/actions";
 
 class Logout extends React.Component {
-  onSubmit = async (event) => {
+  logout = async (event) => {
     event.preventDefault();
     const cookies = new Cookies();
     const csrfCookie = cookies.get("csrftoken");
@@ -40,14 +39,9 @@ class Logout extends React.Component {
 
   render = () => {
     return (
-      <div>
-        <h1>Logout</h1>
-        <Form onSubmit={this.onSubmit}>
-          <Button variant="primary" type="submit">
-            Logout
-          </Button>
-        </Form>
-      </div>
+      <Button variant="primary" type="submit" onClick={this.logout}>
+        Logout
+      </Button>
     );
   };
 }
