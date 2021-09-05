@@ -4,12 +4,18 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import Logout from "./Logout";
+
 const UserInformation = (props) => {
   return (
-    <Container>
+    <Container fluid={false}>
       <Row>
-        <Col>Username: {props.userInfo.username}</Col>
-        <Col>Email: {props.userInfo.email}</Col>
+        <Col>
+          <p>Logged as: {props.userInfo.username}</p>
+        </Col>
+        <Col>
+          <Logout />
+        </Col>
       </Row>
     </Container>
   );
