@@ -1,7 +1,6 @@
 import json
 
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest
 
@@ -11,12 +10,12 @@ def register_view(request):
         return HttpResponseBadRequest("Cannot register, currently logged in")
 
     user_to_register = json.loads(request.body)
-    users_with_requested_name_or_email = User.objects.filter(
+    users_with_requested_name_or_email = get_user_model().objects.filter(
         Q(username=user_to_register["username"]) | Q(email=user_to_register["email"])
     )
 
     if len(users_with_requested_name_or_email) == 0:
-        User.objects.create_user(
+        get_user_model().objects.create_user(
             username=user_to_register["username"],
             email=user_to_register["email"],
             password=user_to_register["password"],

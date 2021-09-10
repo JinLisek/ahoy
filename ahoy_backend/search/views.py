@@ -1,6 +1,6 @@
 import json
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse, HttpResponseBadRequest
 
 
@@ -8,7 +8,7 @@ def search_view(request, search_text):
     if not request.user.is_authenticated:
         return HttpResponseBadRequest("Not logged in, cannot search")
 
-    found_users = User.objects.filter(username__contains=search_text)
+    found_users = get_user_model().objects.filter(username__contains=search_text)
 
     if len(found_users) == 0:
         return HttpResponseBadRequest("Nothing found")
