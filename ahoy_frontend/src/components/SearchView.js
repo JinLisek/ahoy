@@ -5,6 +5,8 @@ import React from "react";
 
 import Container from "react-bootstrap/Container";
 
+import UserEntry from "./UserEntry";
+
 class SearchView extends React.Component {
   constructor(props) {
     super(props);
@@ -43,12 +45,13 @@ class SearchView extends React.Component {
   };
 
   render = () => {
-    let users = [];
-    let userCounter = 1;
-    for (const user of this.state.foundUsers) {
-      users.push(<h3 key={"userLabel" + userCounter++}>{user["username"]}</h3>);
-    }
-    return <Container>{users}</Container>;
+    return (
+      <Container>
+        {this.state.foundUsers.map((user) => (
+          <UserEntry key={"userLabel" + user["username"]} username={user["username"]} />
+        ))}
+      </Container>
+    );
   };
 }
 
