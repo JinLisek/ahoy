@@ -1,21 +1,18 @@
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-
 import React from "react";
 
-import { Route } from "react-router-dom";
-import Home from "./components/Home";
-import Chat from "./components/Chat";
-import SearchView from "./components/SearchView";
+import { connect } from "react-redux";
 
-const App = () => {
-  return (
-    <div className="App">
-      <Route exact path="/" component={Home} />
-      <Route exact path="/search/:searchText" component={SearchView} />
-      <Route exact path="/chat/:roomName" component={Chat} />
-    </div>
-  );
+import NotLoggedInView from "./components/NotLoggedInView";
+import LoggedInView from "./components/LoggedInView";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
+const App = (props) => {
+  if (props.userInfo === null) return <NotLoggedInView />;
+  return <LoggedInView history={props.history} />;
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return { userInfo: state.userInfo };
+};
+export default connect(mapStateToProps)(App);
