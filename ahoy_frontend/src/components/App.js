@@ -2,8 +2,8 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-import NotLoggedInView from "./components/NotLoggedInView";
-import LoggedInView from "./components/LoggedInView";
+import NotLoggedInView from "./NotLoggedInView";
+import LoggedInView from "./LoggedInView";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
