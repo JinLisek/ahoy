@@ -25,7 +25,12 @@ def register_view(request):
     return HttpResponseBadRequest("User duplicated")
 
 
-def login_view(request):
+def create_user_resp(user, msg):
+    resp = {"message": msg, "data": {"username": user.username, "email": user.email}}
+    return json.dumps(resp)
+
+
+def login_user(request):
     user_to_login = json.loads(request.body)
     user = authenticate(
         username=user_to_login["username"], password=user_to_login["password"]
@@ -33,10 +38,27 @@ def login_view(request):
 
     if user is not None:
         login(request, user)
-        resp_body = {"username": user.username, "email": user.email}
-        return HttpResponse(json.dumps(resp_body))
+        return HttpResponse(create_user_resp(user=user, msg="Successfully logged in"))
 
     return HttpResponseBadRequest("Incorrect credentials")
+
+
+def login_status(request):
+    if request.user.is_authenticated:
+        return HttpResponse(
+            create_user_resp(user=request.user, msg="Login status: logged in")
+        )
+
+    return HttpResponse(json.dumps({"message": "Login status: logged out"}))
+
+
+def login_view(request):
+    if request.method == "POST":
+        return login_user(request)
+    elif request.method == "GET":
+        return login_status(request)
+
+    return HttpResponseBadRequest("Login only handles POST and GET")
 
 
 def logout_view(request):
