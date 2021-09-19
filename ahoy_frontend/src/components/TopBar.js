@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 import Image from "react-bootstrap/Image";
-import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
@@ -11,30 +10,31 @@ import Notifications from "./Notifications";
 import Logout from "./Logout";
 
 const TopBar = (props) => (
-  <Navbar>
-    <Container>
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto">
-          <Nav.Item>
-            <Nav.Link as={Link} to="">
-              <Image width={150} height={150} src={process.env.PUBLIC_URL + "/ahoy-logo.png"} />
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <SearchInput history={props.history} />
-          </Nav.Item>
-          <Nav.Item>
-            <UserInformation />
-          </Nav.Item>
-          <Nav.Item>
-            <Notifications />
-          </Nav.Item>
-          <Nav.Item>
-            <Logout />
-          </Nav.Item>
-        </Nav>
-      </Navbar.Collapse>
-    </Container>
+  <Navbar expand="md">
+    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+    <Navbar.Collapse className="align-items-start">
+      <Nav className="me-auto">
+        <Nav.Item>
+          <Nav.Link as={Link} to="" href="">
+            <Image width={120} height={120} src={process.env.PUBLIC_URL + "/ahoy-logo.png"} />
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item className="m-3">
+          <SearchInput history={props.history} />
+        </Nav.Item>
+      </Nav>
+      <Nav className="ms-auto ">
+        <Nav.Item>
+          <UserInformation />
+        </Nav.Item>
+        <Nav.Item>
+          <Notifications />
+        </Nav.Item>
+        <Nav.Item>
+          <Logout />
+        </Nav.Item>
+      </Nav>
+    </Navbar.Collapse>
   </Navbar>
 );
 
