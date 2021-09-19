@@ -1,9 +1,8 @@
-import axios from "axios";
-import Cookies from "universal-cookie";
-
 import React from "react";
 
 import Container from "react-bootstrap/Container";
+
+import { getBackend } from "../common/BackendApiUtilities";
 
 import UserEntry from "./UserEntry";
 
@@ -16,8 +15,6 @@ class SearchView extends React.Component {
   componentDidMount = async () => {
     const searchRegex = /\/search\/(?<searchText>.*)/;
     const searchText = this.props.history.location.pathname.match(searchRegex).groups["searchText"];
-    const cookies = new Cookies();
-    const csrfCookie = cookies.get("csrftoken");
 
     if (searchText === "") {
       console.warn("TRIED TO SEARCH WITH EMPTY STRING!!!!!!!!!!!!!!!");
@@ -25,14 +22,7 @@ class SearchView extends React.Component {
     }
 
     try {
-      const loginResp = await axios({
-        method: "get",
-        url: `http://192.168.1.165:8000/search/${searchText}/`,
-        withCredentials: true,
-        xsrfHeaderName: "X-CSRFToken",
-        xsrfCookieName: "csrftoken",
-        headers: { "X-CSRFToken": csrfCookie },
-      });
+      const loginResp = await getBackend(`search/${searchText}`);
       const { data } = await loginResp;
       console.log("Found: ", data.users);
       this.setState({ foundUsers: data.users });

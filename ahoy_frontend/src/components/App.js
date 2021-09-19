@@ -1,9 +1,8 @@
-import axios from "axios";
-import Cookies from "universal-cookie";
-
 import React from "react";
 
 import { connect } from "react-redux";
+
+import { getBackend } from "../common/BackendApiUtilities";
 
 import { loginUser } from "../redux-stuff/actions";
 
@@ -14,18 +13,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 class App extends React.Component {
   componentDidMount = async () => {
-    const cookies = new Cookies();
-    const csrfCookie = cookies.get("csrftoken");
-
     try {
-      const loginResp = await axios({
-        method: "get",
-        url: "http://192.168.1.165:8000/authentication/login",
-        withCredentials: true,
-        xsrfHeaderName: "X-CSRFToken",
-        xsrfCookieName: "csrftoken",
-        headers: { "X-CSRFToken": csrfCookie },
-      });
+      const loginResp = await getBackend("authentication/login");
       const { data } = await loginResp;
       console.log(data.message);
       if (data.data) this.props.loginUser(data.data);

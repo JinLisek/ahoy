@@ -1,10 +1,9 @@
-import axios from "axios";
-import Cookies from "universal-cookie";
 import React from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+import { postBackend } from "../common/BackendApiUtilities";
 class Register extends React.Component {
   constructor(props) {
     super(props);
@@ -25,8 +24,6 @@ class Register extends React.Component {
 
   onSubmit = async (event) => {
     event.preventDefault();
-    const cookies = new Cookies();
-    const csrfCookie = cookies.get("csrftoken");
 
     if (this.state.userName === "" || this.state.email === "" || this.state.password === "") {
       console.warn("TRIED TO REGISTER WITH SOMETHING EMPTY!!!!!!!!!!!!!!!");
@@ -36,15 +33,7 @@ class Register extends React.Component {
     const requestData = { username: this.state.userName, email: this.state.email, password: this.state.password };
 
     try {
-      const registerResp = await axios({
-        method: "post",
-        url: "http://192.168.1.165:8000/authentication/register",
-        data: requestData,
-        withCredentials: true,
-        xsrfHeaderName: "X-CSRFToken",
-        xsrfCookieName: "csrftoken",
-        headers: { "X-CSRFToken": csrfCookie },
-      });
+      const registerResp = await postBackend("authentication/register", requestData);
       const { data } = await registerResp;
       console.log("Register response: " + data);
     } catch (err) {
