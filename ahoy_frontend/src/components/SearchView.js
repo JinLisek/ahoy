@@ -30,8 +30,8 @@ class SearchView extends React.Component {
     }
 
     try {
-      const loginResp = await getBackend(`search/${searchPhrase}`);
-      const { data } = await loginResp;
+      const searchResp = await getBackend(`search/${searchPhrase}`);
+      const { data } = await searchResp;
       console.log("Found: ", data.users);
       this.setState({ foundUsers: data.users });
     } catch (err) {
