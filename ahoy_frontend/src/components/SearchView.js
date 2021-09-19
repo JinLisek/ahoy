@@ -13,16 +13,16 @@ class SearchView extends React.Component {
   }
 
   componentDidMount = async () => {
-    await this.requestFriends();
+    await this.requestSearch();
   };
 
   componentDidUpdate = async (prevProps) => {
     if (this.props.match.params.searchPhrase === prevProps.match.params.searchPhrase) return;
 
-    await this.requestFriends();
+    await this.requestSearch();
   };
 
-  requestFriends = async () => {
+  requestSearch = async () => {
     const searchPhrase = this.props.match.params.searchPhrase;
     if (searchPhrase === "") {
       console.warn("TRIED TO SEARCH WITH EMPTY STRING!!!!!!!!!!!!!!!");
