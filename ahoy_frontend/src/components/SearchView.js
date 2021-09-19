@@ -13,16 +13,24 @@ class SearchView extends React.Component {
   }
 
   componentDidMount = async () => {
-    const searchRegex = /\/search\/(?<searchText>.*)/;
-    const searchText = this.props.history.location.pathname.match(searchRegex).groups["searchText"];
+    await this.requestFriends();
+  };
 
-    if (searchText === "") {
+  componentDidUpdate = async (prevProps) => {
+    if (this.props.match.params.searchPhrase === prevProps.match.params.searchPhrase) return;
+
+    await this.requestFriends();
+  };
+
+  requestFriends = async () => {
+    const searchPhrase = this.props.match.params.searchPhrase;
+    if (searchPhrase === "") {
       console.warn("TRIED TO SEARCH WITH EMPTY STRING!!!!!!!!!!!!!!!");
       return;
     }
 
     try {
-      const loginResp = await getBackend(`search/${searchText}`);
+      const loginResp = await getBackend(`search/${searchPhrase}`);
       const { data } = await loginResp;
       console.log("Found: ", data.users);
       this.setState({ foundUsers: data.users });

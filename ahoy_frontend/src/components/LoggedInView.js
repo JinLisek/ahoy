@@ -13,7 +13,7 @@ const LoggedInView = (props) => {
     <Container>
       <Route path="/" component={TopBar} />
       <Route exact path="/" component={CreateRoom} />
-      <Route exact path="/search/:searchText" component={SearchView} />
+      <Route exact path="/search/:searchPhrase" component={SearchView} />
       <Route exact path="/chat/:roomName" component={Chat} />
     </Container>
   );
