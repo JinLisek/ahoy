@@ -6,12 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from friends.models import FriendRequest
 
 
-def friend_request_view(request, receiver_username):
-    if not request.user.is_authenticated:
-        return HttpResponseBadRequest("Not logged in, cannot send friend requests")
-
-    sender_username = request.user.username
-
+def add_friend_request(sender_username, receiver_username):
     sender_user = get_user_model().objects.get(username=sender_username)
     receiver_user = get_user_model().objects.get(username=receiver_username)
 
@@ -34,3 +29,19 @@ def friend_request_view(request, receiver_username):
     }
 
     return HttpResponse(json.dumps(resp_body))
+
+
+def get_friend_requests():
+    return HttpResponseBadRequest("friend request GET DOESNT WORK YET")
+
+
+def friend_request_view(request, receiver_username):
+    if not request.user.is_authenticated:
+        return HttpResponseBadRequest("Not logged in, cannot send friend requests")
+
+    if request.method == "POST":
+        return add_friend_request(
+            sender_username=request.user.username, receiver_username=receiver_username
+        )
+    elif request.method == "GET":
+        return get_friend_requests()
