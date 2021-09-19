@@ -8,6 +8,7 @@ import Nav from "react-bootstrap/Nav";
 import UserInformation from "./UserInformation";
 import SearchInput from "./SearchInput";
 import Notifications from "./Notifications";
+import Logout from "./Logout";
 
 const TopBar = (props) => (
   <Navbar>
@@ -27,6 +28,9 @@ const TopBar = (props) => (
           </Nav.Item>
           <Nav.Item>
             <Notifications />
+          </Nav.Item>
+          <Nav.Item>
+            <Logout />
           </Nav.Item>
         </Nav>
       </Navbar.Collapse>
