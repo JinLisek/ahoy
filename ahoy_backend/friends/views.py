@@ -6,7 +6,30 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from friends.models import FriendRequest
 
 
-def add_friend_request(sender_username, receiver_username):
+def get_friend_requests(request):
+    if not request.user.is_authenticated:
+        return HttpResponseBadRequest("Not logged in, cannot send friend requests")
+
+    friend_requests = FriendRequest.objects.filter(receiver=request.user)
+
+    response = {
+        "friend_requests": list(
+            map(
+                lambda friend_request: friend_request.sender.username,
+                friend_requests,
+            )
+        )
+    }
+
+    return HttpResponse(json.dumps(response))
+
+
+def friend_request_view(request, receiver_username):
+    if not request.user.is_authenticated:
+        return HttpResponseBadRequest("Not logged in, cannot send friend requests")
+
+    sender_username = request.user.username
+
     if sender_username == receiver_username:
         return HttpResponseBadRequest("Cannot send friend request to yourself")
 
@@ -26,25 +49,9 @@ def add_friend_request(sender_username, receiver_username):
         sender=sender_user, receiver=receiver_user
     )
 
-    resp_body = {
+    response = {
         "message": "Successfully sent friend request",
         "data": {"sender": sender_username, "receivier": receiver_username},
     }
 
-    return HttpResponse(json.dumps(resp_body))
-
-
-def get_friend_requests():
-    return HttpResponseBadRequest("friend request GET DOESNT WORK YET")
-
-
-def friend_request_view(request, receiver_username):
-    if not request.user.is_authenticated:
-        return HttpResponseBadRequest("Not logged in, cannot send friend requests")
-
-    if request.method == "POST":
-        return add_friend_request(
-            sender_username=request.user.username, receiver_username=receiver_username
-        )
-    elif request.method == "GET":
-        return get_friend_requests()
+    return HttpResponse(json.dumps(response))
