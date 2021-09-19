@@ -7,6 +7,9 @@ from friends.models import FriendRequest
 
 
 def add_friend_request(sender_username, receiver_username):
+    if sender_username == receiver_username:
+        return HttpResponseBadRequest("Cannot send friend request to yourself")
+
     sender_user = get_user_model().objects.get(username=sender_username)
     receiver_user = get_user_model().objects.get(username=receiver_username)
 
