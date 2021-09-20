@@ -16,7 +16,7 @@ class Notifications extends React.Component {
 
   requestNotifications = async () => {
     try {
-      const notificationsResp = await getBackend("friends");
+      const notificationsResp = await getBackend("friends/requests");
       const { data } = await notificationsResp;
       this.setState({ friendRequests: data.friend_requests });
     } catch (err) {
