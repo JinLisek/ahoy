@@ -24,11 +24,60 @@ def get_friend_requests(request):
     return HttpResponse(json.dumps(response))
 
 
-def friend_request_view(request, receiver_username):
+def reject_friend_view(request):
+    if not request.user.is_authenticated:
+        return HttpResponseBadRequest("Not logged in, cannot reject friend requests")
+
+    acceptor_username = request.user.username
+    requestor_username = json.loads(request.body)["username"]
+
+    acceptor_user = get_user_model().objects.get(username=acceptor_username)
+    requestor_user = get_user_model().objects.get(username=requestor_username)
+
+    deleted_requests = FriendRequest.objects.filter(
+        sender=requestor_user, receiver=acceptor_user
+    ).delete()
+
+    if deleted_requests[0] == 0:
+        return HttpResponseBadRequest(
+            f"User {acceptor_username} has no pending friend request from {requestor_username}"
+        )
+
+    response = {"message": "Successfully rejected friend request"}
+
+    return HttpResponse(json.dumps(response))
+
+
+def accept_friend_view(request):
+    if not request.user.is_authenticated:
+        return HttpResponseBadRequest("Not logged in, cannot accept friend requests")
+
+    acceptor_username = request.user.username
+    requestor_username = json.loads(request.body)["username"]
+
+    acceptor_user = get_user_model().objects.get(username=acceptor_username)
+    requestor_user = get_user_model().objects.get(username=requestor_username)
+
+    deleted_requests = FriendRequest.objects.filter(
+        sender=requestor_user, receiver=acceptor_user
+    ).delete()
+
+    if deleted_requests[0] == 0:
+        return HttpResponseBadRequest(
+            f"User {acceptor_username} has no pending friend request from {requestor_username}"
+        )
+
+    response = {"message": "Successfully accepted friend request"}
+
+    return HttpResponse(json.dumps(response))
+
+
+def friend_request_view(request):
     if not request.user.is_authenticated:
         return HttpResponseBadRequest("Not logged in, cannot send friend requests")
 
     sender_username = request.user.username
+    receiver_username = json.loads(request.body)["username"]
 
     if sender_username == receiver_username:
         return HttpResponseBadRequest("Cannot send friend request to yourself")
