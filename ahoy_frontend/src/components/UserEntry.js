@@ -9,8 +9,9 @@ import { postBackend } from "../common/BackendApiUtilities";
 
 class UserEntry extends React.Component {
   sendFriendRequest = async () => {
+    const requestData = { username: this.props.username };
     try {
-      await postBackend(`friends/requests/${this.props.username}`);
+      await postBackend("friends/request", requestData);
     } catch (err) {
       if (err.response) {
         const errResp = err.response;
