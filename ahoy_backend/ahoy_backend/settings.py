@@ -82,8 +82,12 @@ ASGI_APPLICATION = "ahoy_backend.asgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "ahoy",
+        "USER": "ahoyuser",
+        "PASSWORD": "yoha",
+        "HOST": "localhost",
+        "PORT": "",
         "TEST": {"NAME": Path(BASE_DIR) / "db_test.sqlite3"},
     }
 }
