@@ -11,6 +11,7 @@ class Profile(models.Model):
 
 @receiver(post_save, sender=get_user_model())
 def create_profile(sender, instance, created, **kwargs):
+    del sender
     if created:
         print("create_profile")
         Profile.objects.create(user=instance)
@@ -18,5 +19,6 @@ def create_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=get_user_model())
 def save_profile(sender, instance, **kwargs):
+    del sender
     print("save_profile")
     instance.profile.save()
