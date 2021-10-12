@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "channels",
     "authentication",
+    "users",
     "friends",
     "chat",
 ]
