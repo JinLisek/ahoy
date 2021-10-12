@@ -6,7 +6,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
-    friends = models.ManyToManyField("Profile", blank=True)
+    friends = models.ManyToManyField(get_user_model(), blank=True, related_name="+")
 
 
 @receiver(post_save, sender=get_user_model())

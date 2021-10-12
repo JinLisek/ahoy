@@ -2,7 +2,6 @@ import json
 
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse, HttpResponseBadRequest
-from users.models import Profile
 
 from friends.models import FriendRequest
 
@@ -67,6 +66,9 @@ def accept_friend_view(request):
         return HttpResponseBadRequest(
             f"User {acceptor_username} has no pending friend request from {requestor_username}"
         )
+
+    acceptor_user.profile.friends.add(requestor_user)
+    requestor_user.profile.friends.add(acceptor_user)
 
     response = {"message": "Successfully accepted friend request"}
 
