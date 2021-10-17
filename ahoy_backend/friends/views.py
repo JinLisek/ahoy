@@ -75,6 +75,17 @@ def accept_friend_view(request):
     return HttpResponse(json.dumps(response))
 
 
+def get_friends_view(request, username):
+    if not request.user.is_authenticated:
+        return HttpResponseBadRequest("Not logged in, cannot send friend requests")
+
+    user = get_user_model().objects.get(username=username)
+    friends = user.profile.friends.all()
+
+    response = {"friends": list(map(lambda friend: friend.username, friends))}
+    return HttpResponse(json.dumps(response))
+
+
 def friend_request_view(request):
     if not request.user.is_authenticated:
         return HttpResponseBadRequest("Not logged in, cannot send friend requests")
