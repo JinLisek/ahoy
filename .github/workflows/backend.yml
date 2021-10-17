@@ -10,9 +10,9 @@ on:
     paths-ignore:
     - "ahoy_frontend/**"
   
-  defaults:
-    run:
-      working-directory: backend
+defaults:
+  run:
+    working-directory: backend
   
   jobs:
     build:
