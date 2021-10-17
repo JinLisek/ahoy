@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
 import UserInformation from "./UserInformation";
-import SearchInput from "./SearchInput";
+import SearchForm from "./SearchForm";
 import Notifications from "./Notifications";
 import Logout from "./Logout";
 
@@ -21,7 +21,7 @@ const TopBar = (props) => (
           </Nav.Link>
         </Nav.Item>
         <Nav.Item className="m-3">
-          <SearchInput history={props.history} />
+          <SearchForm history={props.history} />
         </Nav.Item>
       </Nav>
       <Nav className="ms-auto ">

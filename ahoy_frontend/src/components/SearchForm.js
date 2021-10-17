@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-class SearchInput extends React.Component {
+class SearchForm extends React.Component {
   constructor() {
     super();
     this.state = { searchText: "" };
@@ -34,4 +34,4 @@ class SearchInput extends React.Component {
   );
 }
 
-export default SearchInput;
+export default SearchForm;
