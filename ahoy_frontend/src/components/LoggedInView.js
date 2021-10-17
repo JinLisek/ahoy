@@ -14,7 +14,7 @@ const LoggedInView = (props) => {
     <Container>
       <Route path="/" component={TopBar} />
       <Route exact path="/" component={CreateRoom} />
-      <Route exact path="/user/:username" component={UserProfile} />
+      <Route exact path="/user/:username" render={(props) => <UserProfile username={props.match.params.username} />} />
       <Route exact path="/search/:searchPhrase" component={SearchView} />
       <Route exact path="/chat/:roomName" component={Chat} />
     </Container>

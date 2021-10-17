@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Container from "react-bootstrap/Container";
+import ListGroup from "react-bootstrap/ListGroup";
 
 import { getBackend } from "../common/BackendApiUtilities";
 
@@ -14,13 +16,13 @@ class UserProfile extends React.Component {
   };
 
   componentDidUpdate = async (prevProps) => {
-    if (this.props.match.params.username === prevProps.match.params.username) return;
+    if (this.props.username === prevProps.username) return;
 
     await this.getFriends();
   };
 
   getFriends = async () => {
-    const username = this.props.match.params.username;
+    const username = this.props.username;
     if (!username || username === "") {
       console.warn("TRIED TO GET FRIENDS FOR EMPTY USERNAME!!!!!!!!!!!!!!!");
       return;
@@ -41,10 +43,15 @@ class UserProfile extends React.Component {
   render = () => {
     return (
       <Container>
-        <h1>Friends</h1>
-        {this.state.friends.map((username) => (
-          <p key={username}>{username}</p>
-        ))}
+        <h1>Profile: {this.props.username}</h1>
+        <h2>Friends</h2>
+        <ListGroup className="me-auto" variant="flush">
+          {this.state.friends.map((username) => (
+            <ListGroup.Item action key={username} as={Link} to={`/user/${username}`}>
+              {username}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
       </Container>
     );
   };
