@@ -1,8 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-import Container from "react-bootstrap/Container";
-import ListGroup from "react-bootstrap/ListGroup";
+import UserProfileView from "./UserProfileView";
 
 import { getBackend } from "../common/BackendApiUtilities";
 
@@ -40,20 +38,6 @@ class UserProfile extends React.Component {
     }
   };
 
-  render = () => {
-    return (
-      <Container>
-        <h1>Profile: {this.props.username}</h1>
-        <h2>Friends</h2>
-        <ListGroup className="me-auto" variant="flush">
-          {this.state.friends.map((username) => (
-            <ListGroup.Item action key={username} as={Link} to={`/user/${username}`}>
-              {username}
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </Container>
-    );
-  };
+  render = () => <UserProfileView username={this.props.username} friends={this.state.friends} />;
 }
 export default UserProfile;
