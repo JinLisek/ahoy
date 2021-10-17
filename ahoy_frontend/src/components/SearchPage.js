@@ -1,10 +1,8 @@
 import React from "react";
 
-import Container from "react-bootstrap/Container";
-
 import { getBackend } from "../common/BackendApiUtilities";
 
-import UserEntry from "./UserEntry";
+import UserSearchView from "./UserSearchView";
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -42,15 +40,7 @@ class SearchPage extends React.Component {
     }
   };
 
-  render = () => {
-    return (
-      <Container>
-        {this.state.foundUsers.map((user) => (
-          <UserEntry key={"userLabel" + user["username"]} username={user["username"]} />
-        ))}
-      </Container>
-    );
-  };
+  render = () => <UserSearchView users={this.state.foundUsers.map((user) => user.username)} />;
 }
 
 export default SearchPage;
