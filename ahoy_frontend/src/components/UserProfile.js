@@ -1,8 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import UserProfileView from "./UserProfileView";
 
-import { getBackend } from "../common/BackendApiUtilities";
+import { getBackend, postBackend } from "../common/BackendApiUtilities";
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -17,6 +18,18 @@ class UserProfile extends React.Component {
     if (this.props.username === prevProps.username) return;
 
     await this.getFriends();
+  };
+
+  sendFriendRequest = async (username) => {
+    const requestData = { username };
+    try {
+      await postBackend("friends/request", requestData);
+    } catch (err) {
+      if (err.response) {
+        const errResp = err.response;
+        console.error(`${errResp.statusText}: ${errResp.data}`);
+      } else console.error(err);
+    }
   };
 
   getFriends = async () => {
@@ -38,6 +51,17 @@ class UserProfile extends React.Component {
     }
   };
 
-  render = () => <UserProfileView username={this.props.username} friends={this.state.friends} />;
+  render = () => (
+    <UserProfileView
+      shouldRenderFriendRequest={this.props.userInfo.username !== this.props.username}
+      username={this.props.username}
+      friends={this.state.friends}
+      sendFriendRequest={this.sendFriendRequest}
+    />
+  );
 }
-export default UserProfile;
+
+const mapStateToProps = (state) => {
+  return { userInfo: state.userInfo };
+};
+export default connect(mapStateToProps)(UserProfile);
