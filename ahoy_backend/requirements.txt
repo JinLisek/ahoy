@@ -1,6 +1,6 @@
 black==21.7b0
 channels==3.0.4
-channels_reddis==3.3.0
+channels_redis==3.3.0
 Django==3.2.6
 django-cors-headers==3.8.0
 pylint==2.10.2
