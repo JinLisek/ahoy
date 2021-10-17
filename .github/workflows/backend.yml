@@ -26,6 +26,7 @@ jobs:
           python-version: 3.9.7
 
   quality:
+    runs-on: ubuntu-latest
     steps:
       - name: Mypy
         run: mypy .
