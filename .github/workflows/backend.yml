@@ -24,5 +24,10 @@ defaults:
           uses: action/setup-python@v2
           with:
             python-version: 3.9.7
+            
+    quality:
+      steps:
+        - name: Mypy
+          run: mypy .
 
     
