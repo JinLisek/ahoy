@@ -12,7 +12,7 @@ on:
   
 defaults:
   run:
-    working-directory: backend
+    working-directory: ahoy_backend
   
 jobs:
   quality:
