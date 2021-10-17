@@ -7,7 +7,7 @@ import UserProfile from "./UserProfile";
 import CreateRoom from "./CreateRoom";
 import TopBar from "./TopBar";
 import Chat from "./Chat";
-import SearchView from "./SearchView";
+import SearchPage from "./SearchPage";
 
 const LoggedInView = (props) => {
   return (
@@ -15,7 +15,7 @@ const LoggedInView = (props) => {
       <Route path="/" component={TopBar} />
       <Route exact path="/" component={CreateRoom} />
       <Route exact path="/user/:username" render={(props) => <UserProfile username={props.match.params.username} />} />
-      <Route exact path="/search/:searchPhrase" component={SearchView} />
+      <Route exact path="/search/:searchPhrase" component={SearchPage} />
       <Route exact path="/chat/:roomName" component={Chat} />
     </Container>
   );

@@ -6,7 +6,7 @@ import { getBackend } from "../common/BackendApiUtilities";
 
 import UserEntry from "./UserEntry";
 
-class SearchView extends React.Component {
+class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { foundUsers: [] };
@@ -53,4 +53,4 @@ class SearchView extends React.Component {
   };
 }
 
-export default SearchView;
+export default SearchPage;
