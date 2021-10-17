@@ -24,7 +24,7 @@ class SearchView extends React.Component {
 
   requestSearch = async () => {
     const searchPhrase = this.props.match.params.searchPhrase;
-    if (searchPhrase === "") {
+    if (!searchPhrase || searchPhrase === "") {
       console.warn("TRIED TO SEARCH WITH EMPTY STRING!!!!!!!!!!!!!!!");
       return;
     }

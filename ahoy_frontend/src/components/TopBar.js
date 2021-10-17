@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
@@ -15,7 +16,7 @@ const TopBar = (props) => (
     <Navbar.Collapse className="align-items-start">
       <Nav className="me-auto">
         <Nav.Item>
-          <Nav.Link as={Link} to="" href="">
+          <Nav.Link as={Link} to="">
             <Image width={120} height={120} src={process.env.PUBLIC_URL + "/ahoy-logo.png"} />
           </Nav.Link>
         </Nav.Item>
@@ -25,7 +26,9 @@ const TopBar = (props) => (
       </Nav>
       <Nav className="ms-auto ">
         <Nav.Item>
-          <UserInformation />
+          <Nav.Link as={Link} to={"/user/" + props.userInfo.username}>
+            <UserInformation username={props.userInfo.username} />
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Notifications />
@@ -38,4 +41,7 @@ const TopBar = (props) => (
   </Navbar>
 );
 
-export default TopBar;
+const mapStateToProps = (state) => {
+  return { userInfo: state.userInfo };
+};
+export default connect(mapStateToProps)(TopBar);

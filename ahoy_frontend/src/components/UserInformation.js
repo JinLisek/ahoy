@@ -1,5 +1,3 @@
-import { connect } from "react-redux";
-
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -13,14 +11,11 @@ const UserInformation = (props) => {
           <Image width={50} height={50} src={process.env.PUBLIC_URL + "/ahoy-default-avatar.png"} />
         </Col>
         <Col>
-          <p className="text-right">{props.userInfo.username}</p>
+          <p className="text-right">{props.username}</p>
         </Col>
       </Row>
     </Container>
   );
 };
 
-const mapStateToProps = (state) => {
-  return { userInfo: state.userInfo };
-};
-export default connect(mapStateToProps)(UserInformation);
+export default UserInformation;
