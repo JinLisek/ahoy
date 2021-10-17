@@ -14,20 +14,20 @@ defaults:
   run:
     working-directory: backend
   
-  jobs:
-    build:
-      runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v2
-        - name: Set up Python 3.9.7
-          uses: action/setup-python@v2
-          with:
-            python-version: 3.9.7
-            
-    quality:
-      steps:
-        - name: Mypy
-          run: mypy .
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9.7
+        uses: action/setup-python@v2
+        with:
+          python-version: 3.9.7
+
+  quality:
+    steps:
+      - name: Mypy
+        run: mypy .
 
     
