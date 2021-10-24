@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path("chat/", include("chat.urls")),
     path("authentication/", include("authentication.urls")),
     path("search/", include("search.urls")),
     path("friends/", include("friends.urls")),
