@@ -3,6 +3,7 @@ import json
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 def register_view(request):
@@ -52,6 +53,7 @@ def login_status(request):
     return HttpResponse(json.dumps({"message": "Login status: logged out"}))
 
 
+@ensure_csrf_cookie
 def login_view(request):
     if request.method == "POST":
         return login_user(request)
