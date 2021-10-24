@@ -13,8 +13,6 @@ const createBackendApi = () => {
 
   return axios.create({
     withCredentials: true,
-    xsrfHeaderName: "X-CSRFToken",
-    xsrfCookieName: "csrftoken",
     headers: { "X-CSRFToken": csrfCookie },
   });
 };
