@@ -118,6 +118,16 @@ def friend_request_view(request):
             f"User {sender_username} already has pending friend request to {receiver_username}"
         )
 
+    if sender_user.profile.friends.filter(username=receiver_username).exists():
+        return HttpResponseBadRequest(
+            f"User {sender_username} is already friends with {receiver_username}"
+        )
+
+    if receiver_user.profile.friends.filter(username=sender_username).exists():
+        return HttpResponseBadRequest(
+            f"User {sender_username} is already friends with {receiver_username}"
+        )
+
     FriendRequest.objects.create_friend_request(
         sender=sender_user, receiver=receiver_user
     )
