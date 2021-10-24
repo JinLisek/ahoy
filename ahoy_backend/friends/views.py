@@ -67,6 +67,16 @@ def accept_friend_view(request):
             f"User {acceptor_username} has no pending friend request from {requestor_username}"
         )
 
+    if acceptor_user.profile.friends.filter(username=requestor_username).exists():
+        return HttpResponseBadRequest(
+            f"User {acceptor_username} is already friends with {requestor_username}"
+        )
+
+    if requestor_user.profile.friends.filter(username=acceptor_user).exists():
+        return HttpResponseBadRequest(
+            f"User {acceptor_username} is already friends with {requestor_username}"
+        )
+
     acceptor_user.profile.friends.add(requestor_user)
     requestor_user.profile.friends.add(acceptor_user)
 
