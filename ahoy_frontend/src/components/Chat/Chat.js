@@ -1,5 +1,7 @@
 import React from "react";
 
+import { createWebSocket } from "../../common/BackendApiUtilities";
+
 import ChatView from "./ChatView";
 
 class Chat extends React.Component {
@@ -22,10 +24,6 @@ class Chat extends React.Component {
     this.setState({ userMessage: event.target.value });
   };
 
-  openEventListener = (event) => {
-    console.log("Received open event on websocket");
-  };
-
   onMessageReceived = (event) => {
     const data = JSON.parse(event.data);
     this.setState((prevState) => {
@@ -34,14 +32,7 @@ class Chat extends React.Component {
   };
 
   componentDidMount = () => {
-    const webSocketAddr = "ws://192.168.1.165:8000/ws/chat/" + this.roomName + "/";
-    this.webSocketClient = new WebSocket(webSocketAddr);
-    this.webSocketClient.onmessage = this.onMessageReceived;
-
-    this.webSocketClient.onclose = function (e) {
-      console.error("Chat socket closed unexpectedly");
-    };
-    this.webSocketClient.addEventListener("open", this.openEventListener);
+    this.webSocketClient = createWebSocket("ws/chat/" + this.roomName + "/", this.onMessageReceived);
   };
 
   render = () => (
