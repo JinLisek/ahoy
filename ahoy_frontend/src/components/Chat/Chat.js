@@ -1,6 +1,8 @@
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import React from "react";
+
+import Messages from "./Messages";
+import NewMessageForm from "./NewMessageForm";
+import ChatView from "./ChatView";
 
 class Chat extends React.Component {
   constructor(props) {
@@ -44,36 +46,14 @@ class Chat extends React.Component {
     this.webSocketClient.addEventListener("open", this.openEventListener);
   };
 
-  messagesToText = () => {
-    let result = "";
-    for (const msg of this.state.messages) result += msg.author + ": " + msg.message + "\n";
-
-    return result;
-  };
-
-  render = () => {
-    return (
-      <div>
-        <h1>Room: {this.roomName}</h1>
-        <Form>
-          <Form.Group controlId="formRoomChatHistory">
-            <Form.Control
-              as="textarea"
-              style={{ height: "600px", width: "800px" }}
-              value={this.messagesToText()}
-              readOnly
-            />
-          </Form.Group>
-          <Form.Group controlId="formUserMessage">
-            <Form.Control as="textarea" style={{ height: "100px", width: "700px" }} onChange={this.updateUserMessage} />
-            <Button variant="primary" onClick={this.sendMessage}>
-              Send
-            </Button>
-          </Form.Group>
-        </Form>
-      </div>
-    );
-  };
+  render = () => (
+    <ChatView
+      roomName={this.roomName}
+      messages={this.state.messages}
+      onMsgChange={this.updateUserMessage}
+      onSend={this.sendMessage}
+    />
+  );
 }
 
 export default Chat;

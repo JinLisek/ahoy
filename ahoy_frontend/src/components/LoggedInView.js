@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import UserProfile from "./UserProfile";
 import CreateRoom from "./CreateRoom";
 import TopBar from "./TopBar";
-import Chat from "./Chat";
+import Chat from "./Chat/Chat";
 import SearchPage from "./SearchPage";
 
 const LoggedInView = (props) => {
