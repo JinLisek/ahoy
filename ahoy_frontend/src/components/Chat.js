@@ -29,7 +29,7 @@ class Chat extends React.Component {
   onMessageReceived = (event) => {
     const data = JSON.parse(event.data);
     this.setState((prevState) => {
-      return { messages: [...prevState.messages, data.message] };
+      return { messages: [...prevState.messages, data] };
     });
   };
 
@@ -44,6 +44,13 @@ class Chat extends React.Component {
     this.webSocketClient.addEventListener("open", this.openEventListener);
   };
 
+  messagesToText = () => {
+    let result = "";
+    for (const msg of this.state.messages) result += msg.author + ": " + msg.message + "\n";
+
+    return result;
+  };
+
   render = () => {
     return (
       <div>
@@ -53,7 +60,7 @@ class Chat extends React.Component {
             <Form.Control
               as="textarea"
               style={{ height: "600px", width: "800px" }}
-              value={this.state.messages.join("\n")}
+              value={this.messagesToText()}
               readOnly
             />
           </Form.Group>
