@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 
 import UserProfile from "./UserProfile";
-import CreateRoom from "./CreateRoom";
+import CreateRoom from "./Chat/CreateRoom";
 import TopBar from "./TopBar";
 import Chat from "./Chat/Chat";
 import SearchPage from "./SearchPage";
