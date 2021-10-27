@@ -1,7 +1,5 @@
 import React from "react";
 
-import Messages from "./Messages";
-import NewMessageForm from "./NewMessageForm";
 import ChatView from "./ChatView";
 
 class Chat extends React.Component {
