@@ -1,0 +1,5 @@
+[tool.pylint.master]
+ignore=["migrations"]
+
+[tool.isort]
+known_third_party=["django"]
