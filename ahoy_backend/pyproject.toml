@@ -1,5 +1,6 @@
 [tool.pylint.master]
-ignore=["migrations"]
+ignore=["migrations", "manage.py"]
+disable=["C0114", "C0115", "C0116"]
 
 [tool.isort]
 known_third_party=["django"]
