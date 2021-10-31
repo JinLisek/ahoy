@@ -1,5 +1,4 @@
 {
-    "cmake.configureOnOpen": false,
     "python.linting.pylintEnabled": false,
     "python.linting.prospectorEnabled": true,
     "python.linting.enabled": true

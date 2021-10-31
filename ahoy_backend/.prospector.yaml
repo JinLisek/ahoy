@@ -1,0 +1,12 @@
+ignore-paths:
+    - migrations
+    - manage.py
+
+strictness: veryhigh
+doc-warnings: false
+max-line-length: 120
+
+pylint:
+  disable:
+    - too-few-public-methods
+
