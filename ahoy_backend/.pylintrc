@@ -1,0 +1,7 @@
+[MASTER]
+ignore=migrations,manage.py
+disable=missing-function-docstring,
+    missing-class-docstring,
+    missing-module-docstring
+django-settings-module=ahoy_backend.ahoy_backend.settings
+load-plugins=pylint_django
