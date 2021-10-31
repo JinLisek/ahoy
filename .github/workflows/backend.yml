@@ -14,11 +14,12 @@ defaults:
   run:
     working-directory: ahoy_backend
   
+    env:
+      DJANGO_SETTINGS_MODULE: ahoy_backend.settings
+      DJANGO_SECRET_KEY: lol
+
 jobs:
   quality:
-    strategy:
-      matrix:
-        tool: ["mypy ."]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,12 +31,8 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
-      - run: ${{matrix.tool}}
-  # mypy:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - run: mypy .
+      - name: Mypy
+        run: mypy .
       
 
     
