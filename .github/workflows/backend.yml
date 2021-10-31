@@ -15,7 +15,7 @@ defaults:
     working-directory: ahoy_backend
   
 jobs:
-  quality:
+  install-dependencies:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,11 +23,15 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9.7
-      - name: Install dependencies
+      - name: Install dependencies from requirements.txt
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Mypy
-        run: mypy .
+  mypy:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - run: mypy .
+      
 
     
