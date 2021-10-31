@@ -19,7 +19,7 @@ env:
   DJANGO_SECRET_KEY: lol
 
 jobs:
-  quality:
+  mypy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,8 +31,21 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Mypy
+      - name: Run mypy
         run: mypy .
-      
+    runs-on: ubuntu-latest
+  prospector:
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9.7
+      - name: Install dependencies from requirements.txt
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run prospector
+        run: prospector --uses django
 
     
