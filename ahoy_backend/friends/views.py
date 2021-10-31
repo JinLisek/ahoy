@@ -1,7 +1,7 @@
 import json
 
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, JsonResponse
 
 from friends.models import FriendRequest
 
@@ -21,7 +21,7 @@ def get_friend_requests(request):
         )
     }
 
-    return HttpResponse(json.dumps(response))
+    return JsonResponse(response)
 
 
 def reject_friend_view(request):
@@ -45,7 +45,7 @@ def reject_friend_view(request):
 
     response = {"message": "Successfully rejected friend request"}
 
-    return HttpResponse(json.dumps(response))
+    return JsonResponse(response)
 
 
 def accept_friend_view(request):
@@ -82,7 +82,7 @@ def accept_friend_view(request):
 
     response = {"message": "Successfully accepted friend request"}
 
-    return HttpResponse(json.dumps(response))
+    return JsonResponse(response)
 
 
 def get_friends_view(request, username):
@@ -93,7 +93,7 @@ def get_friends_view(request, username):
     friends = user.profile.friends.all()
 
     response = {"friends": list(map(lambda friend: friend.username, friends))}
-    return HttpResponse(json.dumps(response))
+    return JsonResponse(response)
 
 
 def friend_request_view(request):
@@ -137,4 +137,4 @@ def friend_request_view(request):
         "data": {"sender": sender_username, "receivier": receiver_username},
     }
 
-    return HttpResponse(json.dumps(response))
+    return JsonResponse(response)

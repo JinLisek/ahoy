@@ -1,7 +1,5 @@
-import json
-
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, JsonResponse
 
 
 def search_view(request, search_text):
@@ -21,4 +19,4 @@ def search_view(request, search_text):
             )
         )
     }
-    return HttpResponse(json.dumps(resp_body))
+    return JsonResponse(resp_body)

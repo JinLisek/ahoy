@@ -2,7 +2,7 @@ import json
 
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 
@@ -21,14 +21,13 @@ def register_view(request):
             email=user_to_register["email"],
             password=user_to_register["password"],
         )
-        return HttpResponse("Correctly registered", status=201)
+        return JsonResponse({"message": "Correctly registered"})
 
     return HttpResponseBadRequest("User duplicated")
 
 
 def create_user_resp(user, msg):
-    resp = {"message": msg, "data": {"username": user.username, "email": user.email}}
-    return json.dumps(resp)
+    return {"message": msg, "data": {"username": user.username, "email": user.email}}
 
 
 def login_user(request):
@@ -39,25 +38,25 @@ def login_user(request):
 
     if user is not None:
         login(request, user)
-        return HttpResponse(create_user_resp(user=user, msg="Successfully logged in"))
+        return JsonResponse(create_user_resp(user=user, msg="Successfully logged in"))
 
     return HttpResponseBadRequest("Incorrect credentials")
 
 
 def login_status(request):
-    if request.user.is_authenticated:
-        return HttpResponse(
-            create_user_resp(user=request.user, msg="Login status: logged in")
-        )
+    if not request.user.is_authenticated:
+        return JsonResponse({"message": "Login status: logged out"})
 
-    return HttpResponse(json.dumps({"message": "Login status: logged out"}))
+    return JsonResponse(
+        create_user_resp(user=request.user, msg="Login status: logged in")
+    )
 
 
 @ensure_csrf_cookie
 def login_view(request):
     if request.method == "POST":
         return login_user(request)
-    elif request.method == "GET":
+    if request.method == "GET":
         return login_status(request)
 
     return HttpResponseBadRequest("Login only handles POST and GET")
@@ -68,4 +67,4 @@ def logout_view(request):
         return HttpResponseBadRequest("Not logged in, cannot logout")
 
     logout(request)
-    return HttpResponse("Successfully logged out")
+    return JsonResponse({"message": "Successfully logged out"})
