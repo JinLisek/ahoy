@@ -14,9 +14,9 @@ defaults:
   run:
     working-directory: ahoy_backend
   
-    env:
-      DJANGO_SETTINGS_MODULE: ahoy_backend.settings
-      DJANGO_SECRET_KEY: lol
+env:
+  DJANGO_SETTINGS_MODULE: ahoy_backend.settings
+  DJANGO_SECRET_KEY: lol
 
 jobs:
   quality:
