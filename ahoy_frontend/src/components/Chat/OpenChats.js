@@ -38,7 +38,6 @@ class OpenChats extends React.Component {
 }
 
 const mapStateToProps = ({ authentication, chat }) => {
-  console.log(authentication);
   return { openChats: chat.openChats, userInfo: authentication.userInfo };
 };
 export default connect(mapStateToProps, { receiveMessage })(OpenChats);
