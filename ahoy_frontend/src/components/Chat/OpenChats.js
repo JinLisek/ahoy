@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Container from "react-bootstrap/esm/Container";
-import ListGroup from "react-bootstrap/ListGroup";
+import Row from "react-bootstrap/Row";
 
 import { createWebSocket } from "common/BackendApiUtilities";
 import { receiveMessage } from "redux-stuff/actions";
@@ -26,13 +26,13 @@ class OpenChats extends React.Component {
   };
 
   render = () => (
-    <Container>
+    <Container fluid className="fixed-bottom">
       <h1>OpenChats</h1>
-      <ListGroup horizontal>
+      <Row>
         {this.props.openChats.map((username) => (
-          <ListGroup.Item action key={username} as={Chat} secondChatUser={username} />
+          <Chat action key={username} secondChatUser={username} />
         ))}
-      </ListGroup>
+      </Row>
     </Container>
   );
 }

@@ -33,9 +33,7 @@ const LoggedInView = (props) => {
           <Route path="/" component={FriendsList} />
         </Col>
       </Row>
-      <Row>
-        <OpenChats />
-      </Row>
+      <OpenChats />
     </Container>
   );
 };
