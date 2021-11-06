@@ -6,13 +6,13 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 
-import UserProfile from "./UserProfile";
-import CreateRoom from "./Chat/CreateRoom";
-import TopBar from "./TopBar";
-import Chat from "./Chat/Chat";
-import SearchPage from "./SearchPage";
-import FriendsList from "./Chat/FriendsList";
-import OpenChats from "./Chat/OpenChats";
+import UserProfile from "components/UserProfile";
+import CreateRoom from "components/Chat/CreateRoom";
+import TopBar from "components/TopBar";
+import Chat from "components/Chat/Chat";
+import SearchPage from "components/SearchPage";
+import FriendsList from "components/Chat/FriendsList";
+import OpenChats from "components/Chat/OpenChats";
 
 const LoggedInView = (props) => {
   return (

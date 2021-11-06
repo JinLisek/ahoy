@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import Container from "react-bootstrap/esm/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 
-import { createWebSocket } from "../../common/BackendApiUtilities";
-import { receiveMessage } from "../../redux-stuff/actions";
+import { createWebSocket } from "common/BackendApiUtilities";
+import { receiveMessage } from "redux-stuff/actions";
 
-import Chat from "./Chat";
+import Chat from "components/Chat/Chat";
 
 class OpenChats extends React.Component {
   onMessageReceived = (event) => {

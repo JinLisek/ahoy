@@ -3,7 +3,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import { postBackend } from "../common/BackendApiUtilities";
+import { postBackend } from "common/BackendApiUtilities";
 class Register extends React.Component {
   constructor(props) {
     super(props);

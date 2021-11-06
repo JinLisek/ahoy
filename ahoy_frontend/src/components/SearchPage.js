@@ -1,8 +1,8 @@
 import React from "react";
 
-import { getBackend } from "../common/BackendApiUtilities";
+import { getBackend } from "common/BackendApiUtilities";
 
-import UserSearchView from "./UserSearchView";
+import UserSearchView from "components/UserSearchView";
 
 class SearchPage extends React.Component {
   constructor(props) {

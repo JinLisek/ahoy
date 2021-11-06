@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 
 import Button from "react-bootstrap/Button";
 
-import { getBackend } from "../common/BackendApiUtilities";
-import { logoutUser } from "../redux-stuff/actions";
+import { getBackend } from "common/BackendApiUtilities";
+import { logoutUser } from "redux-stuff/actions";
 
 class Logout extends React.Component {
   logout = async (event) => {

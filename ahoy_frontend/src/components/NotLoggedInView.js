@@ -2,8 +2,8 @@ import React from "react";
 
 import { Container } from "react-bootstrap";
 
-import Register from "./Register";
-import Login from "./Login";
+import Register from "components/Register";
+import Login from "components/Login";
 
 const NotLoggedInView = () => {
   return (

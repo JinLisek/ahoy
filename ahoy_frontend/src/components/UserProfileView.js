@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
-import LinksToUsers from "./LinksToUsers";
+import LinksToUsers from "components/LinksToUsers";
 
 const UserProfileView = (props) => {
   return (
