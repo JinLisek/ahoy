@@ -8,7 +8,7 @@ const Message = (props) => (
       <ListGroup.Item as={Link} to={"/user/" + props.author} className="bg-dark text-light border-0">
         {props.author}
       </ListGroup.Item>
-      <ListGroup.Item className="border-0">{props.message}</ListGroup.Item>
+      <ListGroup.Item className="border-0 message-container">{props.message}</ListGroup.Item>
     </ListGroup>
   </ListGroup.Item>
 );
