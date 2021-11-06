@@ -22,7 +22,6 @@ class Messages extends React.Component {
   };
 
   render = () => {
-    const ref = React.createRef();
     return (
       <ListGroup ref={(ref) => (this.messagesContainerRef = ref)} variant="flush" className="messages-container">
         {this.props.messages.map((msg, idx) => {
