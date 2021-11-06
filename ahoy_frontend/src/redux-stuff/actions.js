@@ -1,4 +1,4 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT, OPEN_USER_CHAT } from "./actionTypes";
+import { USER_LOGGED_IN, USER_LOGGED_OUT, OPEN_USER_CHAT, MESSAGE_RECEIVED } from "./actionTypes";
 
 export const loginUser = (userInfo) => {
   return { type: USER_LOGGED_IN, payload: userInfo };
@@ -10,4 +10,8 @@ export const logoutUser = () => {
 
 export const openUserChat = (username) => {
   return { type: OPEN_USER_CHAT, payload: username };
+};
+
+export const receiveMessage = (sender, receiver, message) => {
+  return { type: MESSAGE_RECEIVED, payload: { sender, receiver, message } };
 };
