@@ -5,7 +5,7 @@ import Button from "react-bootstrap/esm/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { postBackend } from "../common/BackendApiUtilities";
+import { postBackend } from "common/BackendApiUtilities";
 
 class UserEntry extends React.Component {
   sendFriendRequest = async () => {

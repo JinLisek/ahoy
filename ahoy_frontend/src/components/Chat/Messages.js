@@ -1,6 +1,6 @@
 import ListGroup from "react-bootstrap/ListGroup";
 
-import Message from "./Message";
+import Message from "components/Chat/Message";
 
 const Messages = (props) => (
   <ListGroup variant="flush">

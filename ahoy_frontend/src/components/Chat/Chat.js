@@ -2,10 +2,9 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-import { createWebSocket } from "../../common/BackendApiUtilities";
-import { postBackend } from "../../common/BackendApiUtilities";
+import { postBackend } from "common/BackendApiUtilities";
 
-import ChatView from "./ChatView";
+import ChatView from "components/Chat/ChatView";
 
 class Chat extends React.Component {
   constructor(props) {

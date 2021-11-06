@@ -3,7 +3,7 @@ import React from "react";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
 
-import { getBackend, postBackend } from "../common/BackendApiUtilities";
+import { getBackend, postBackend } from "common/BackendApiUtilities";
 
 class Notifications extends React.Component {
   constructor(props) {

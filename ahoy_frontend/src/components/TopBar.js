@@ -5,10 +5,10 @@ import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
-import UserInformation from "./UserInformation";
-import SearchForm from "./SearchForm";
-import Notifications from "./Notifications";
-import Logout from "./Logout";
+import UserInformation from "components/UserInformation";
+import SearchForm from "components/SearchForm";
+import Notifications from "components/Notifications";
+import Logout from "components/Logout";
 
 const TopBar = (props) => (
   <Navbar expand="md">

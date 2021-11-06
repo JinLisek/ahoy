@@ -6,8 +6,8 @@ import Container from "react-bootstrap/esm/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 
-import { getBackend } from "../../common/BackendApiUtilities";
-import { openUserChat } from "../../redux-stuff/actions";
+import { getBackend } from "common/BackendApiUtilities";
+import { openUserChat } from "redux-stuff/actions";
 
 class FriendsList extends React.Component {
   constructor(props) {

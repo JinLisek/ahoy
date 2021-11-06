@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 
-import Messages from "./Messages";
-import NewMessageForm from "./NewMessageForm";
+import Messages from "components/Chat/Messages";
+import NewMessageForm from "components/Chat/NewMessageForm";
 
 const ChatView = (props) => (
   <Container>
