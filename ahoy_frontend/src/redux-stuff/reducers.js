@@ -18,14 +18,12 @@ function authenticationReducer(state = initialAuthenticationState, action) {
       return { ...state, openChats: [...state.openChats, action.payload] };
     case MESSAGE_RECEIVED:
       const payload = action.payload;
-      let chatUser = "";
-      if (state.userInfo.username !== payload.sender) chatUser = payload.sender;
-      if (state.userInfo.username !== payload.receiver) chatUser = payload.receiver;
+      const otherChatUser = payload.otherChatUser;
 
       let userMessages = [action.payload];
-      if (chatUser in state.messages) userMessages = state.messages[chatUser].concat(userMessages);
+      if (otherChatUser in state.messages) userMessages = state.messages[otherChatUser].concat(userMessages);
       let newMessages = { ...state.messages };
-      newMessages[chatUser] = userMessages;
+      newMessages[otherChatUser] = userMessages;
 
       return { ...state, messages: newMessages };
     default:

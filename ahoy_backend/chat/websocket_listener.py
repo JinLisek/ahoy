@@ -23,10 +23,14 @@ def handle_message_received(data):
     receiver = data["receiver"]
     message = data["message"]
     if receiver in UserMessageHandlers.user_to_handler.keys():
-        UserMessageHandlers.user_to_handler[receiver](sender, message)
+        UserMessageHandlers.user_to_handler[receiver](
+            sender=sender, receiver=receiver, message=message
+        )
 
     if sender in UserMessageHandlers.user_to_handler.keys():
-        UserMessageHandlers.user_to_handler[sender](sender, message)
+        UserMessageHandlers.user_to_handler[sender](
+            sender=sender, receiver=receiver, message=message
+        )
 
 
 def setup_websocket_event_handlers():
