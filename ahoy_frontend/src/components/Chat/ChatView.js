@@ -1,12 +1,14 @@
+import Container from "react-bootstrap/Container";
+
 import Messages from "./Messages";
 import NewMessageForm from "./NewMessageForm";
 
 const ChatView = (props) => (
-  <div>
+  <Container>
     <h1>Room: {props.roomName}</h1>
     <Messages messages={props.messages} />
     <NewMessageForm onMsgChange={props.onMsgChange} onSend={props.onSend} />
-  </div>
+  </Container>
 );
 
 export default ChatView;
