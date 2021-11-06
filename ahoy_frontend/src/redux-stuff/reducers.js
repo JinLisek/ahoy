@@ -4,6 +4,7 @@ import { USER_LOGGED_IN, USER_LOGGED_OUT, OPEN_USER_CHAT } from "./actionTypes";
 
 const initialAuthenticationState = {
   userInfo: null,
+  openChats: [],
 };
 
 function authenticationReducer(state = initialAuthenticationState, action) {
@@ -13,7 +14,7 @@ function authenticationReducer(state = initialAuthenticationState, action) {
     case USER_LOGGED_OUT:
       return { ...state, userInfo: null };
     case OPEN_USER_CHAT:
-      return state;
+      return { ...state, openChats: [...state.openChats, action.payload] };
     default:
       return state;
   }
