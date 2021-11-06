@@ -22,3 +22,8 @@ code {
   max-width: 240px;
   word-wrap: break-word;
 }
+
+.message-textarea {
+  height: 75px;
+  resize: none;
+}
