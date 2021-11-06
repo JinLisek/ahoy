@@ -47,9 +47,9 @@ class Chat extends React.Component {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  if (!(ownProps.secondChatUser in state.messages)) return { messages: [] };
+const mapStateToProps = ({ chat }, ownProps) => {
+  if (!(ownProps.secondChatUser in chat.messages)) return { messages: [] };
 
-  return { messages: state.messages[ownProps.secondChatUser] };
+  return { messages: chat.messages[ownProps.secondChatUser] };
 };
 export default connect(mapStateToProps)(Chat);

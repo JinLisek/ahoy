@@ -32,7 +32,7 @@ class App extends React.Component {
   };
 }
 
-const mapStateToProps = (state) => {
-  return { userInfo: state.userInfo };
+const mapStateToProps = ({ authentication }) => {
+  return { userInfo: authentication.userInfo };
 };
 export default connect(mapStateToProps, { loginUser })(App);
