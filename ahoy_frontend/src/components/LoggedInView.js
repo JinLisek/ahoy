@@ -7,7 +7,6 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 
 import UserProfile from "components/UserProfile";
-import CreateRoom from "components/Chat/CreateRoom";
 import TopBar from "components/TopBar";
 import Chat from "components/Chat/Chat";
 import SearchPage from "components/SearchPage";
@@ -22,7 +21,6 @@ const LoggedInView = (props) => {
       </Row>
       <Row>
         <Col>
-          <Route exact path="/" component={CreateRoom} />
           <Route
             exact
             path="/user/:username"
