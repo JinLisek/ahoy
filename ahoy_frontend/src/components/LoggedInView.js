@@ -12,6 +12,7 @@ import TopBar from "./TopBar";
 import Chat from "./Chat/Chat";
 import SearchPage from "./SearchPage";
 import FriendsList from "./Chat/FriendsList";
+import OpenChats from "./Chat/OpenChats";
 
 const LoggedInView = (props) => {
   return (
@@ -34,7 +35,9 @@ const LoggedInView = (props) => {
           <Route path="/" component={FriendsList} />
         </Col>
       </Row>
-      <Row>Open Friends Chats</Row>
+      <Row>
+        <OpenChats />
+      </Row>
     </Container>
   );
 };
