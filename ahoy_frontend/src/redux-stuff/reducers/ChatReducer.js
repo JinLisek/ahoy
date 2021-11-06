@@ -5,7 +5,7 @@ const initialChatState = { openChats: [], messages: {} };
 const chatReducer = (state = initialChatState, action) => {
   switch (action.type) {
     case OPEN_USER_CHAT:
-      return { ...state, openChats: Array.from(new Set(...state.openChats, action.payload)) };
+      return { ...state, openChats: Array.from(new Set(state.openChats.concat(action.payload))) };
     case MESSAGE_RECEIVED:
       const payload = action.payload;
       const otherChatUser = payload.otherChatUser;
