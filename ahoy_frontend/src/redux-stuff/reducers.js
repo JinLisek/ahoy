@@ -15,7 +15,7 @@ function authenticationReducer(state = initialAuthenticationState, action) {
     case USER_LOGGED_OUT:
       return { ...state, userInfo: null };
     case OPEN_USER_CHAT:
-      return { ...state, openChats: [...state.openChats, action.payload] };
+      return { ...state, openChats: Array.from(new Set(...state.openChats, action.payload)) };
     case MESSAGE_RECEIVED:
       const payload = action.payload;
       const otherChatUser = payload.otherChatUser;
