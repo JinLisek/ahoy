@@ -15,7 +15,7 @@ code {
 .messages-container {
   overflow-y: scroll;
   max-height: 300px;
-  max-width: 300px;
+  width: 300px;
 }
 
 .message-container {
@@ -24,6 +24,5 @@ code {
 }
 
 .message-textarea {
-  height: 75px;
   resize: none;
 }
