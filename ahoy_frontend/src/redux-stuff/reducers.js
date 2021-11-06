@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
 
-import { USER_LOGGED_IN, USER_LOGGED_OUT, OPEN_USER_CHAT } from "./actionTypes";
+import { USER_LOGGED_IN, USER_LOGGED_OUT, OPEN_USER_CHAT, MESSAGE_RECEIVED } from "./actionTypes";
 
 const initialAuthenticationState = {
   userInfo: null,
   openChats: [],
+  messages: {},
 };
 
 function authenticationReducer(state = initialAuthenticationState, action) {
@@ -15,6 +16,18 @@ function authenticationReducer(state = initialAuthenticationState, action) {
       return { ...state, userInfo: null };
     case OPEN_USER_CHAT:
       return { ...state, openChats: [...state.openChats, action.payload] };
+    case MESSAGE_RECEIVED:
+      const payload = action.payload;
+      let chatUser = "";
+      if (state.userInfo.username !== payload.sender) chatUser = payload.sender;
+      if (state.userInfo.username !== payload.receiver) chatUser = payload.receiver;
+
+      let userMessages = [action.payload];
+      if (chatUser in state.messages) userMessages = state.messages[chatUser].concat(userMessages);
+      let newMessages = { ...state.messages };
+      newMessages[chatUser] = userMessages;
+
+      return { ...state, messages: newMessages };
     default:
       return state;
   }

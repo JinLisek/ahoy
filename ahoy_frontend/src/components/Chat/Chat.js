@@ -1,5 +1,7 @@
 import React from "react";
 
+import { connect } from "react-redux";
+
 import { createWebSocket } from "../../common/BackendApiUtilities";
 import { postBackend } from "../../common/BackendApiUtilities";
 
@@ -8,7 +10,7 @@ import ChatView from "./ChatView";
 class Chat extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { messages: [], userMessage: "" };
+    this.state = { userMessage: "" };
   }
 
   sendMessage = async (event) => {
@@ -20,7 +22,7 @@ class Chat extends React.Component {
     }
 
     try {
-      const sendMsgResp = await postBackend(`chat/send_message/${this.props.seondChatUser}`, { message: userMsg });
+      const sendMsgResp = await postBackend(`chat/send_message/${this.props.secondChatUser}`, { message: userMsg });
       const { data } = await sendMsgResp;
       console.log(data.message);
     } catch (err) {
@@ -35,25 +37,19 @@ class Chat extends React.Component {
     this.setState({ userMessage: event.target.value });
   };
 
-  onMessageReceived = (event) => {
-    const data = JSON.parse(event.data);
-    this.setState((prevState) => {
-      return { messages: [...prevState.messages, data] };
-    });
-  };
-
-  componentDidMount = () => {
-    this.webSocketClient = createWebSocket("ws/chat/", this.onMessageReceived);
-  };
-
   render = () => (
     <ChatView
-      roomName={this.props.seondChatUser}
-      messages={this.state.messages}
+      roomName={this.props.secondChatUser}
+      messages={this.props.messages}
       onMsgChange={this.updateUserMessage}
       onSend={this.sendMessage}
     />
   );
 }
 
-export default Chat;
+const mapStateToProps = (state, ownProps) => {
+  if (!(ownProps.secondChatUser in state.messages)) return { messages: [] };
+
+  return { messages: state.messages[ownProps.secondChatUser] };
+};
+export default connect(mapStateToProps)(Chat);

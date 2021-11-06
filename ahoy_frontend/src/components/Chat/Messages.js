@@ -5,7 +5,7 @@ import Message from "./Message";
 const Messages = (props) => (
   <ListGroup variant="flush">
     {props.messages.map((msg) => (
-      <Message key={msg.author + msg.message} author={msg.author} message={msg.message} />
+      <Message key={msg.sender + msg.message} author={msg.sender} message={msg.message} />
     ))}
   </ListGroup>
 );
