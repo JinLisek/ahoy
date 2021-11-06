@@ -12,6 +12,6 @@ export const openUserChat = (username) => {
   return { type: OPEN_USER_CHAT, payload: username };
 };
 
-export const receiveMessage = (sender, receiver, message) => {
-  return { type: MESSAGE_RECEIVED, payload: { sender, receiver, message } };
+export const receiveMessage = (otherChatUser, sender, message) => {
+  return { type: MESSAGE_RECEIVED, payload: { otherChatUser, sender, message } };
 };

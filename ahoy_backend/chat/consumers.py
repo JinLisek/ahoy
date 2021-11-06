@@ -18,12 +18,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @async_to_sync
     async def send_received_message_to_user(
-        self, sender_username: str, message: str
+        self, sender: str, receiver: str, message: str
     ) -> None:
         if not self.__user:
             return
 
-        await self.chat_message({"author": sender_username, "message": message})
+        other_chat_user = sender if self.__user.username == receiver else receiver
+
+        await self.send_message(
+            sender=sender, other_chat_user=other_chat_user, message=message
+        )
 
     async def connect(self):
         self.__user = self.scope["user"]
@@ -53,9 +57,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.channel_layer.group_discard(self.__channel_name, self.channel_name)
 
-    async def chat_message(self, event):
+    async def send_message(self, other_chat_user: str, sender: str, message: str):
         await self.send(
             text_data=json.dumps(
-                {"author": event["author"], "message": event["message"]}
+                {
+                    "other_chat_user": other_chat_user,
+                    "sender": sender,
+                    "message": message,
+                }
             )
         )

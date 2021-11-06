@@ -12,9 +12,9 @@ import Chat from "./Chat";
 
 class OpenChats extends React.Component {
   onMessageReceived = (event) => {
-    const data = JSON.parse(event.data);
-    console.log(`onMessageReceived: ${data.sender}, ${data.receiver}`);
-    this.props.receiveMessage(data.sender, data.receiver, data.message);
+    const { other_chat_user, sender, message } = JSON.parse(event.data);
+
+    this.props.receiveMessage(other_chat_user, sender, message);
   };
 
   componentDidMount = () => {
@@ -37,7 +37,7 @@ class OpenChats extends React.Component {
   );
 }
 
-const mapStateToProps = (state) => {
-  return { openChats: state.openChats };
+const mapStateToProps = ({ openChats, userInfo }) => {
+  return { openChats: openChats, userInfo: userInfo };
 };
 export default connect(mapStateToProps, { receiveMessage })(OpenChats);
