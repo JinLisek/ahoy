@@ -2,8 +2,9 @@ import json
 
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db.models import Q
-from django.http import HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework.status import HTTP_201_CREATED
 
 
 def register_view(request):
@@ -21,7 +22,7 @@ def register_view(request):
             email=user_to_register["email"],
             password=user_to_register["password"],
         )
-        return JsonResponse({"message": "Correctly registered"})
+        return HttpResponse(status=HTTP_201_CREATED)
 
     return HttpResponseBadRequest("User duplicated")
 

@@ -90,7 +90,6 @@ DATABASES = {
         "PASSWORD": "yoha",
         "HOST": "localhost",
         "PORT": "",
-        "TEST": {"NAME": Path(BASE_DIR) / "db_test.sqlite3"},
     }
 }
 
