@@ -7,6 +7,8 @@ doc-warnings: false
 max-line-length: 120
 
 pylint:
+  options:
+    py-version: 3.9.7
   disable:
     - too-few-public-methods
 
