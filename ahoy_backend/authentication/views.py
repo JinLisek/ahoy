@@ -2,12 +2,12 @@ import json
 
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework.status import HTTP_201_CREATED
 
 
-def register_view(request):
+def register_view(request: HttpRequest):
     if request.user.is_authenticated:
         return HttpResponseBadRequest("Cannot register, currently logged in")
 
@@ -31,7 +31,7 @@ def create_user_resp(user, msg):
     return {"message": msg, "data": {"username": user.username, "email": user.email}}
 
 
-def login_user(request):
+def login_user(request: HttpRequest):
     user_to_login = json.loads(request.body)
     user = authenticate(
         username=user_to_login["username"], password=user_to_login["password"]
@@ -44,7 +44,7 @@ def login_user(request):
     return HttpResponseBadRequest("Incorrect credentials")
 
 
-def login_status(request):
+def login_status(request: HttpRequest):
     if not request.user.is_authenticated:
         return JsonResponse({"message": "Login status: logged out"})
 
@@ -54,7 +54,7 @@ def login_status(request):
 
 
 @ensure_csrf_cookie
-def login_view(request):
+def login_view(request: HttpRequest):
     if request.method == "POST":
         return login_user(request)
     if request.method == "GET":
@@ -63,7 +63,7 @@ def login_view(request):
     return HttpResponseBadRequest("Login only handles POST and GET")
 
 
-def logout_view(request):
+def logout_view(request: HttpRequest):
     if not request.user.is_authenticated:
         return HttpResponseBadRequest("Not logged in, cannot logout")
 

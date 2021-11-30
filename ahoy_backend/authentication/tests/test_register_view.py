@@ -40,24 +40,69 @@ def test_given_logged_in_user_in_register_request_should_return_bad_request(
 
 
 @pytest.mark.django_db
-def test_given_duplicated_user_in_register_request_should_return_bad_request(
+def test_given_user_with_duplicated_email_in_register_request_should_return_bad_request(
     create_register_request,
 ):
-    duplicated_user = {
-        "username": "test_user",
+    duplicated_email = "duplicated@email.address"
+    register_body = {
+        "username": "username1",
+        "email": duplicated_email,
+        "password": "test_password",
+    }
+
+    get_user_model().objects.create_user(
+        username="username2",
+        email=duplicated_email,
+        password="some_other_password",
+    )
+
+    response = register_view(request=create_register_request(body=register_body))
+
+    assert HTTP_400_BAD_REQUEST == response.status_code
+
+
+@pytest.mark.django_db
+def test_given_user_with_duplicated_username_in_register_request_should_return_bad_request(
+    create_register_request,
+):
+    duplicated_username = "duplicated_username"
+    register_body = {
+        "username": duplicated_username,
         "email": "test_user@test.test",
         "password": "test_password",
     }
 
     get_user_model().objects.create_user(
-        username=duplicated_user["username"],
-        email=duplicated_user["email"],
-        password=duplicated_user["password"],
+        username=duplicated_username,
+        email="another@test.email",
+        password="some_other_password",
     )
 
-    response = register_view(request=create_register_request(body=duplicated_user))
+    response = register_view(request=create_register_request(body=register_body))
 
     assert HTTP_400_BAD_REQUEST == response.status_code
+
+
+@pytest.mark.django_db
+def test_given_user_with_duplicated_password_in_register_request_should_return_status_created(
+    create_register_request,
+):
+    duplicated_password = "duplicated_password"
+    register_body = {
+        "username": "first username",
+        "email": "test_user@test.test",
+        "password": duplicated_password,
+    }
+
+    get_user_model().objects.create_user(
+        username="second username",
+        email="another@test.email",
+        password=duplicated_password,
+    )
+
+    response = register_view(request=create_register_request(body=register_body))
+
+    assert HTTP_201_CREATED == response.status_code
 
 
 @pytest.mark.django_db
