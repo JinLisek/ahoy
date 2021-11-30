@@ -27,7 +27,7 @@ def fixture_create_register_request(request_factory):
 
 
 @pytest.mark.django_db
-def test_given_logged_in_user_in_register_request_should_return_bad_request(
+def test_given_logged_in_user_should_return_bad_request(
     create_register_request,
 ):
     logged_in_user = get_user_model().objects.create_user(
@@ -40,7 +40,7 @@ def test_given_logged_in_user_in_register_request_should_return_bad_request(
 
 
 @pytest.mark.django_db
-def test_given_user_with_duplicated_email_in_register_request_should_return_bad_request(
+def test_given_user_with_duplicated_email_should_return_bad_request(
     create_register_request,
 ):
     duplicated_email = "duplicated@email.address"
@@ -62,7 +62,7 @@ def test_given_user_with_duplicated_email_in_register_request_should_return_bad_
 
 
 @pytest.mark.django_db
-def test_given_user_with_duplicated_username_in_register_request_should_return_bad_request(
+def test_given_user_with_duplicated_username_should_return_bad_request(
     create_register_request,
 ):
     duplicated_username = "duplicated_username"
@@ -84,7 +84,7 @@ def test_given_user_with_duplicated_username_in_register_request_should_return_b
 
 
 @pytest.mark.django_db
-def test_given_user_with_duplicated_password_in_register_request_should_return_status_created(
+def test_given_user_with_new_username_and_email_but_duplicated_password_should_return_status_created(
     create_register_request,
 ):
     duplicated_password = "duplicated_password"
@@ -106,7 +106,7 @@ def test_given_user_with_duplicated_password_in_register_request_should_return_s
 
 
 @pytest.mark.django_db
-def test_given_new_user_in_register_request_should_return_status_created(
+def test_given_new_user_should_return_status_created(
     create_register_request,
 ):
     register_request = create_register_request(
@@ -122,7 +122,7 @@ def test_given_new_user_in_register_request_should_return_status_created(
 
 
 @pytest.mark.django_db
-def test_given_new_user_in_register_request_should_create_single_user(
+def test_given_new_user_should_create_single_user(
     create_register_request,
 ):
     user_to_register = {
@@ -137,7 +137,7 @@ def test_given_new_user_in_register_request_should_create_single_user(
 
 
 @pytest.mark.django_db
-def test_given_new_user_in_register_request_should_create_user_with_given_data(
+def test_given_new_user_should_create_user_with_given_data(
     create_register_request,
 ):
     user_to_register = {
