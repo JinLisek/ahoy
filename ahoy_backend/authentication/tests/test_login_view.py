@@ -1,6 +1,5 @@
 import pytest
 from django.contrib.auth import get_user_model
-from django.test import RequestFactory
 from rest_framework.status import HTTP_400_BAD_REQUEST
 
 from authentication.views import login_view
@@ -8,17 +7,11 @@ from authentication.views import login_view
 LOGIN_PATH = "authentication/login"
 
 
-@pytest.fixture(name="request_factory")
-def fixture_request_factory():
-    return RequestFactory()
-
-
 @pytest.fixture(name="create_post_login_request")
-def fixture_create_post_login_request(request_factory):
+def fixture_create_post_login_request(rf):
     def create_request(body=None):
-        return request_factory.post(
-            path=LOGIN_PATH, data=body, content_type="application/json"
-        )
+        request = rf.post(path=LOGIN_PATH, data=body, content_type="application/json")
+        return request
 
     return create_request
 
@@ -46,9 +39,9 @@ def test_given_post_request_with_incorrect_credentials_should_return_bad_request
     ["put", "head", "delete", "options", "trace", "patch"],
 )
 def test_given_unsupported_http_method_should_return_bad_request(
-    unsupported_method, request_factory
+    unsupported_method, rf
 ):
-    create_request = getattr(request_factory, unsupported_method)
+    create_request = getattr(rf, unsupported_method)
     response = login_view(request=create_request(path=LOGIN_PATH))
 
     assert HTTP_400_BAD_REQUEST == response.status_code

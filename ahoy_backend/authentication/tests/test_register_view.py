@@ -1,23 +1,17 @@
 import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
-from django.test import RequestFactory
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
 from authentication.views import register_view
 
 
-@pytest.fixture(name="request_factory")
-def fixture_request_factory():
-    return RequestFactory()
-
-
 @pytest.fixture(name="create_register_request")
-def fixture_create_register_request(request_factory):
+def fixture_create_register_request(rf):
     def creator(user=None, body=None):
         if user is None:
             user = AnonymousUser()
-        request = request_factory.post(
+        request = rf.post(
             path="authentication/register", data=body, content_type="application/json"
         )
         request.user = user

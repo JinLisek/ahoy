@@ -9,4 +9,6 @@ max-line-length: 120
 pylint:
   disable:
     - too-few-public-methods
+  options:
+    good-names: rf
 
