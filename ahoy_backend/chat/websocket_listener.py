@@ -26,12 +26,12 @@ def handle_message_received(data):
     sender = data["sender"]
     receiver = data["receiver"]
     message = data["message"]
-    if receiver in UserMessageHandlers.user_to_handler.keys():
+    if receiver in UserMessageHandlers.user_to_handler:
         UserMessageHandlers.user_to_handler[receiver](
             sender=sender, receiver=receiver, message=message
         )
 
-    if sender in UserMessageHandlers.user_to_handler.keys():
+    if sender in UserMessageHandlers.user_to_handler:
         UserMessageHandlers.user_to_handler[sender](
             sender=sender, receiver=receiver, message=message
         )
