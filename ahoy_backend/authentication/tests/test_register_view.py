@@ -1,5 +1,4 @@
 import pytest
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
@@ -22,9 +21,9 @@ def fixture_create_register_request(rf):
 
 @pytest.mark.django_db
 def test_given_logged_in_user_should_return_bad_request(
-    create_register_request,
+    create_register_request, django_user_model
 ):
-    logged_in_user = get_user_model().objects.create_user(
+    logged_in_user = django_user_model.objects.create_user(
         username="logged", email="logged@test.test", password="logged_pass"
     )
 
@@ -35,7 +34,7 @@ def test_given_logged_in_user_should_return_bad_request(
 
 @pytest.mark.django_db
 def test_given_user_with_duplicated_email_should_return_bad_request(
-    create_register_request,
+    create_register_request, django_user_model
 ):
     duplicated_email = "duplicated@email.address"
     register_body = {
@@ -44,7 +43,7 @@ def test_given_user_with_duplicated_email_should_return_bad_request(
         "password": "test_password",
     }
 
-    get_user_model().objects.create_user(
+    django_user_model.objects.create_user(
         username="username2",
         email=duplicated_email,
         password="some_other_password",
@@ -57,7 +56,7 @@ def test_given_user_with_duplicated_email_should_return_bad_request(
 
 @pytest.mark.django_db
 def test_given_user_with_duplicated_username_should_return_bad_request(
-    create_register_request,
+    create_register_request, django_user_model
 ):
     duplicated_username = "duplicated_username"
     register_body = {
@@ -66,7 +65,7 @@ def test_given_user_with_duplicated_username_should_return_bad_request(
         "password": "test_password",
     }
 
-    get_user_model().objects.create_user(
+    django_user_model.objects.create_user(
         username=duplicated_username,
         email="another@test.email",
         password="some_other_password",
@@ -79,7 +78,7 @@ def test_given_user_with_duplicated_username_should_return_bad_request(
 
 @pytest.mark.django_db
 def test_given_user_with_new_username_and_email_but_duplicated_password_should_return_status_created(
-    create_register_request,
+    create_register_request, django_user_model
 ):
     duplicated_password = "duplicated_password"
     register_body = {
@@ -88,7 +87,7 @@ def test_given_user_with_new_username_and_email_but_duplicated_password_should_r
         "password": duplicated_password,
     }
 
-    get_user_model().objects.create_user(
+    django_user_model.objects.create_user(
         username="second username",
         email="another@test.email",
         password=duplicated_password,
@@ -117,7 +116,7 @@ def test_given_new_user_should_return_status_created(
 
 @pytest.mark.django_db
 def test_given_new_user_should_create_single_user(
-    create_register_request,
+    create_register_request, django_user_model
 ):
     user_to_register = {
         "username": "test_user",
@@ -127,12 +126,12 @@ def test_given_new_user_should_create_single_user(
 
     register_view(request=create_register_request(body=user_to_register))
 
-    assert len(get_user_model().objects.all()) == 1
+    assert len(django_user_model.objects.all()) == 1
 
 
 @pytest.mark.django_db
 def test_given_new_user_should_create_user_with_given_data(
-    create_register_request,
+    create_register_request, django_user_model
 ):
     user_to_register = {
         "username": "test_user",
@@ -142,7 +141,7 @@ def test_given_new_user_should_create_user_with_given_data(
 
     register_view(request=create_register_request(body=user_to_register))
 
-    registered_user = get_user_model().objects.first()
+    registered_user = django_user_model.objects.first()
 
     assert registered_user.username == user_to_register["username"]
     assert registered_user.email == user_to_register["email"]

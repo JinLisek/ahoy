@@ -1,5 +1,4 @@
 import pytest
-from django.contrib.auth import get_user_model
 from rest_framework.status import HTTP_400_BAD_REQUEST
 
 from authentication.views import login_view
@@ -18,11 +17,11 @@ def fixture_create_post_login_request(rf):
 
 @pytest.mark.django_db
 def test_given_post_request_with_incorrect_credentials_should_return_bad_request(
-    create_post_login_request,
+    create_post_login_request, django_user_model
 ):
     username = "some username"
     incorrect_credentials = {"username": username, "password": "incorrect password"}
-    get_user_model().objects.create_user(
+    django_user_model.objects.create_user(
         username=username,
         email="some@email.domain",
         password="correct password",
