@@ -1,11 +1,15 @@
+from typing import Callable, Dict
+
 from chat.chat_events import register_on_message_handler
+
+MsgHandler = Callable[[str, str, str], None]
 
 
 class UserMessageHandlers:
-    user_to_handler = {}
+    user_to_handler: Dict[str, MsgHandler] = {}
 
 
-def register_user_message_handler(username: str, callback):
+def register_user_message_handler(username: str, callback: MsgHandler):
     if username in UserMessageHandlers.user_to_handler:
         raise RuntimeError(
             f"ERROR: on message handler for user: {username} already registered!"
