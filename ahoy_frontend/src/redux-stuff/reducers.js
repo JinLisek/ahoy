@@ -1,20 +1,8 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from "./actionTypes";
+import { combineReducers } from "redux";
 
-const initialState = {
-  userInfo: null,
-};
+import authenticationReducer from "./reducers/AuthenticationReducer";
+import chatReducer from "./reducers/ChatReducer";
 
-function authenticationReducer(state = initialState, action) {
-  switch (action.type) {
-    case USER_LOGGED_IN:
-      return { ...state, userInfo: action.payload };
-    case USER_LOGGED_OUT:
-      return { ...state, userInfo: null };
-    default:
-      return state;
-  }
-}
-
-const rootReducer = authenticationReducer;
+const rootReducer = combineReducers({ authentication: authenticationReducer, chat: chatReducer });
 
 export default rootReducer;

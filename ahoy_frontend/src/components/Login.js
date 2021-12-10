@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import { postBackend } from "../common/BackendApiUtilities";
-import { loginUser } from "../redux-stuff/actions";
+import { postBackend } from "common/BackendApiUtilities";
+import { loginUser } from "redux-stuff/actions";
 
 class Login extends React.Component {
   constructor(props) {

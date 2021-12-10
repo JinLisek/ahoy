@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 const NewMessageForm = (props) => (
   <Form>
     <Form.Group controlId="formUserMessage">
-      <Form.Control as="textarea" style={{ height: "100px", width: "700px" }} onChange={props.onMsgChange} />
+      <Form.Control as="textarea" className="message-textarea" onChange={props.onMsgChange} />
       <Button variant="primary" onClick={props.onSend}>
         Send
       </Button>

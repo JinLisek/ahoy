@@ -2,12 +2,12 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-import { getBackend } from "../common/BackendApiUtilities";
+import { getBackend } from "common/BackendApiUtilities";
 
-import { loginUser } from "../redux-stuff/actions";
+import { loginUser } from "redux-stuff/actions";
 
-import NotLoggedInView from "./NotLoggedInView";
-import LoggedInView from "./LoggedInView";
+import NotLoggedInView from "components/NotLoggedInView";
+import LoggedInView from "components/LoggedInView";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -32,7 +32,7 @@ class App extends React.Component {
   };
 }
 
-const mapStateToProps = (state) => {
-  return { userInfo: state.userInfo };
+const mapStateToProps = ({ authentication }) => {
+  return { userInfo: authentication.userInfo };
 };
 export default connect(mapStateToProps, { loginUser })(App);

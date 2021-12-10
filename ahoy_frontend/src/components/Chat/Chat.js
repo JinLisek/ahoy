@@ -1,22 +1,34 @@
 import React from "react";
 
-import { createWebSocket } from "../../common/BackendApiUtilities";
+import { connect } from "react-redux";
 
-import ChatView from "./ChatView";
+import { postBackend } from "common/BackendApiUtilities";
+
+import ChatView from "components/Chat/ChatView";
 
 class Chat extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { messages: [], userMessage: "" };
-    this.roomName = this.props.match.params.roomName;
+    this.state = { userMessage: "" };
   }
 
-  sendMessage = (event) => {
+  sendMessage = async (event) => {
     event.preventDefault();
     const userMsg = this.state.userMessage;
-    if (userMsg !== "") {
-      const messageJson = JSON.stringify({ message: userMsg });
-      this.webSocketClient.send(messageJson);
+    if (userMsg === "") {
+      console.log("Chat::sendMessage -- tried sending empty msg");
+      return;
+    }
+
+    try {
+      const sendMsgResp = await postBackend(`chat/send_message/${this.props.secondChatUser}`, { message: userMsg });
+      const { data } = await sendMsgResp;
+      console.log(data.message);
+    } catch (err) {
+      if (err.response) {
+        const errResp = err.response;
+        console.error(`${errResp.statusText}: ${errResp.data}`);
+      } else console.error(err);
     }
   };
 
@@ -24,25 +36,19 @@ class Chat extends React.Component {
     this.setState({ userMessage: event.target.value });
   };
 
-  onMessageReceived = (event) => {
-    const data = JSON.parse(event.data);
-    this.setState((prevState) => {
-      return { messages: [...prevState.messages, data] };
-    });
-  };
-
-  componentDidMount = () => {
-    this.webSocketClient = createWebSocket("ws/chat/" + this.roomName + "/", this.onMessageReceived);
-  };
-
   render = () => (
     <ChatView
-      roomName={this.roomName}
-      messages={this.state.messages}
+      roomName={this.props.secondChatUser}
+      messages={this.props.messages}
       onMsgChange={this.updateUserMessage}
       onSend={this.sendMessage}
     />
   );
 }
 
-export default Chat;
+const mapStateToProps = ({ chat }, ownProps) => {
+  if (!(ownProps.secondChatUser in chat.messages)) return { messages: [] };
+
+  return { messages: chat.messages[ownProps.secondChatUser] };
+};
+export default connect(mapStateToProps)(Chat);

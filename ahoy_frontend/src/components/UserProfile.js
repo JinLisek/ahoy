@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import UserProfileView from "./UserProfileView";
+import UserProfileView from "components/UserProfileView";
 
-import { getBackend, postBackend } from "../common/BackendApiUtilities";
+import { getBackend, postBackend } from "common/BackendApiUtilities";
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -61,7 +61,7 @@ class UserProfile extends React.Component {
   );
 }
 
-const mapStateToProps = (state) => {
-  return { userInfo: state.userInfo };
+const mapStateToProps = ({ authentication }) => {
+  return { userInfo: authentication.userInfo };
 };
 export default connect(mapStateToProps)(UserProfile);

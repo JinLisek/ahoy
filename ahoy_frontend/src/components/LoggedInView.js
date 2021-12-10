@@ -1,22 +1,39 @@
 import React from "react";
 
 import { Route } from "react-router-dom";
-import Container from "react-bootstrap/Container";
 
-import UserProfile from "./UserProfile";
-import CreateRoom from "./Chat/CreateRoom";
-import TopBar from "./TopBar";
-import Chat from "./Chat/Chat";
-import SearchPage from "./SearchPage";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
+
+import UserProfile from "components/UserProfile";
+import TopBar from "components/TopBar";
+import Chat from "components/Chat/Chat";
+import SearchPage from "components/SearchPage";
+import FriendsList from "components/Chat/FriendsList";
+import OpenChats from "components/Chat/OpenChats";
 
 const LoggedInView = (props) => {
   return (
-    <Container>
-      <Route path="/" component={TopBar} />
-      <Route exact path="/" component={CreateRoom} />
-      <Route exact path="/user/:username" render={(props) => <UserProfile username={props.match.params.username} />} />
-      <Route exact path="/search/:searchPhrase" component={SearchPage} />
-      <Route exact path="/chat/:roomName" component={Chat} />
+    <Container fluid>
+      <Row>
+        <Route path="/" component={TopBar} />
+      </Row>
+      <Row>
+        <Col>
+          <Route
+            exact
+            path="/user/:username"
+            render={(props) => <UserProfile username={props.match.params.username} />}
+          />
+          <Route exact path="/search/:searchPhrase" component={SearchPage} />
+          <Route exact path="/chat/:roomName" component={Chat} />
+        </Col>
+        <Col xs={4}>
+          <Route path="/" component={FriendsList} />
+        </Col>
+      </Row>
+      <OpenChats />
     </Container>
   );
 };

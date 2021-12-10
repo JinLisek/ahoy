@@ -1,6 +1,6 @@
 import Container from "react-bootstrap/Container";
 
-import LinksToUsers from "./LinksToUsers";
+import LinksToUsers from "components/LinksToUsers";
 
 const UserSearchView = (props) => {
   return (
