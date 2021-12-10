@@ -1,6 +1,8 @@
 import pytest
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
+REGISTER_PATH = "/authentication/register"
+
 
 @pytest.mark.django_db
 def test_given_logged_in_user_should_return_bad_request(client, django_user_model):
@@ -12,7 +14,7 @@ def test_given_logged_in_user_should_return_bad_request(client, django_user_mode
     )
 
     client.login(username=username, password=password)
-    response = client.post("/authentication/register")
+    response = client.post(REGISTER_PATH)
 
     assert HTTP_400_BAD_REQUEST == response.status_code
 
@@ -28,7 +30,7 @@ def test_given_user_with_duplicated_email_should_return_bad_request(
     )
 
     response = client.post(
-        "/authentication/register",
+        REGISTER_PATH,
         data={
             "username": "username1",
             "email": duplicated_email,
@@ -53,7 +55,7 @@ def test_given_user_with_duplicated_username_should_return_bad_request(
     )
 
     response = client.post(
-        "/authentication/register",
+        REGISTER_PATH,
         data={
             "username": duplicated_username,
             "email": "test_user@test.test",
@@ -78,7 +80,7 @@ def test_given_user_with_new_username_and_email_but_duplicated_password_should_r
     )
 
     response = client.post(
-        "/authentication/register",
+        REGISTER_PATH,
         data={
             "username": "second username",
             "email": "another@test.test",
@@ -93,7 +95,7 @@ def test_given_user_with_new_username_and_email_but_duplicated_password_should_r
 @pytest.mark.django_db
 def test_given_new_user_should_return_status_created(client):
     response = client.post(
-        "/authentication/register",
+        REGISTER_PATH,
         data={
             "username": "test_user",
             "email": "test_user@test.test",
@@ -113,7 +115,7 @@ def test_there_should_be_no_users_before_registration(django_user_model):
 @pytest.mark.django_db
 def test_given_new_user_should_create_single_user(client, django_user_model):
     client.post(
-        "/authentication/register",
+        REGISTER_PATH,
         data={
             "username": "test_user",
             "email": "test_user@test.test",
@@ -132,7 +134,7 @@ def test_given_new_user_should_create_user_with_given_data(client, django_user_m
     password = "test_password"
 
     client.post(
-        "/authentication/register",
+        REGISTER_PATH,
         data={
             "username": username,
             "email": email,
@@ -146,3 +148,17 @@ def test_given_new_user_should_create_user_with_given_data(client, django_user_m
     assert registered_user.username == username
     assert registered_user.email == email
     assert registered_user.check_password(password)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "unsupported_method",
+    ["put", "head", "delete", "options", "trace", "patch"],
+)
+def test_given_unsupported_http_method_should_return_bad_request(
+    client, unsupported_method
+):
+    unsupported_request = getattr(client, unsupported_method)
+    response = unsupported_request("/authentication/login")
+
+    assert HTTP_400_BAD_REQUEST == response.status_code
